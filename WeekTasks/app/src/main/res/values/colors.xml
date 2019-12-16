@@ -3,4 +3,14 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
+
+    <color name="tasky_purple">#FFB122E5</color>
+    <color name="tasky_dark_purple">#8739E5</color>
+    <color name="tasky_pink">#FFFF63DE</color>
+    <color name="tasky_yellow">#FEDC97</color>
+    <color name="tasky_dark">#323642</color>
+    <color name="tasky_text">#323642</color>
+    <color name="tasky_grey">#D8D8D8</color>
+    <color name="white">#ffffff</color>
+    <color name="black">#000000</color>
 </resources>
