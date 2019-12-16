@@ -5,28 +5,181 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/tasky_yellow"
+    android:background="@color/tasky_dark"
     tools:context=".KeypadActivity">
 
-    <FrameLayout
+    <View
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"/>
 
     <LinearLayout
-        android:layout_width="250dp"
-        android:layout_height="250dp"
-        android:background="@color/tasky_dark"
-        android:layout_gravity="center_horizontal|bottom"
-        android:weightSum="9"
-        android:orientation="vertical">
+        android:visibility="gone"
+        android:id="@+id/decide_password_dialoge"
+        android:orientation="vertical"
+        android:layout_width="350dp"
+        android:layout_height="120dp"
+        android:layout_gravity="center"
+        android:background="@drawable/dialoge_background">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Do you want to set up a password?"
+            android:padding="20dp"
+            android:fontFamily="@font/londrina_solid_regular"
+            android:textColor="@color/white"
+            android:textSize="20sp"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
+            android:background="@color/tasky_dark_blue"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:orientation="horizontal"
+            android:layout_weight="1">
+
+            <Button
+                android:id="@+id/decide_password_dialoge_no"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:text="NO"
+                android:textSize="20sp"
+                app:fontFamily="@font/londrina_solid_regular"
+                android:textColor="@color/white"
+                style="@style/Widget.AppCompat.Button.Borderless"/>
+
+            <Button
+                android:id="@+id/decide_password_dialoge_ask_later"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:text="ASK ME LATER"
+                android:textSize="17sp"
+                app:fontFamily="@font/londrina_solid_regular"
+                android:textColor="@color/white"
+                style="@style/Widget.AppCompat.Button.Borderless"/>
+
+            <Button
+                android:id="@+id/decide_password_dialoge_yes"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:text="YES"
+                android:textSize="20sp"
+                app:fontFamily="@font/londrina_solid_regular"
+                android:textColor="@color/white"
+                style="@style/Widget.AppCompat.Button.Borderless"/>
+
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+    <ImageView
+        android:id="@+id/ic_passkey"
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="50dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center"
+        android:src="@drawable/ic_passkey"
+        />
+
+    <LinearLayout
+        android:id="@+id/entering_password_dialog"
+        android:orientation="vertical"
+        android:layout_width="350dp"
+        android:layout_height="150dp"
+        android:layout_gravity="center">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:text="CHOOSE A PASSWORD"
+            android:gravity="center"
+            android:fontFamily="@font/londrina_solid_regular"
+            android:textColor="@color/white"
+            android:textSize="30sp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.5"
+            android:text="( between 4 to 8 digits )"
+            android:gravity="center"
+            android:fontFamily="@font/londrina_solid_regular"
+            android:textColor="@color/white"
+            android:textSize="20sp"/>
+
+        <TextView
+            android:id="@+id/entering_password_tw"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:text="- - - -"
+            android:gravity="center"
+            android:fontFamily="@font/londrina_solid_regular"
+            android:textColor="@color/white"
+            android:textSize="30sp"/>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+
+    <LinearLayout
+        android:id="@+id/keypad"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:background="@drawable/keypad_background"
+        android:layout_gravity="center_horizontal|bottom"
+        android:weightSum="8"
+        android:orientation="vertical">
+
+
+        <LinearLayout
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
             android:layout_weight="1"
             android:orientation="horizontal"
-            android:background="@color/colorPrimary">
+            android:layout_gravity="center"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:src="@drawable/circle_keypad"
+                android:layout_marginRight="5dp"/>
+
+            <ImageView
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:src="@drawable/circle_keypad"
+                android:layout_marginRight="5dp"/>
+
+            <ImageView
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:src="@drawable/circle_keypad"
+                android:layout_marginRight="5dp"/>
+
+            <ImageView
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:src="@drawable/circle_keypad"/>
 
         </LinearLayout>
 
@@ -154,27 +307,34 @@
             android:orientation="horizontal"
             android:weightSum="3">
 
-            <Button
+            <ImageButton
                 android:layout_width="0dp"
-                android:layout_weight="2"
-                android:layout_height="match_parent"
-                android:text="0"
-                app:fontFamily="@font/londrina_solid_regular"
-                android:textSize="30sp"
-                android:textColor="@color/white"
-                style="@style/Widget.AppCompat.Button.Borderless"
-                android:gravity="right"
-                android:layout_marginRight="32dp"/>
+                android:layout_weight="1"
+                android:layout_height="45dp"
+                android:layout_gravity="center"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_tick"
+                style="@style/Widget.AppCompat.Button.Borderless" />
 
             <Button
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="match_parent"
-                android:text="B"
+                android:text="0"
                 app:fontFamily="@font/londrina_solid_regular"
                 android:textSize="30sp"
                 android:textColor="@color/white"
-                style="@style/Widget.AppCompat.Button.Borderless"/>
+                style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                android:gravity="center"/>
+
+            <ImageButton
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_backspace_arrow"
+                style="@style/Widget.AppCompat.Button.Borderless" />
 
         </LinearLayout>
 

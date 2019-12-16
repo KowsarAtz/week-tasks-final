@@ -39,16 +39,24 @@ public class WeekTasksDBHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public Boolean isPassproteced(){
-        Boolean temp = Boolean.TRUE;
+    public int passProtectedStatus(){
+        int temp;
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT "+ PARAM_TABLE_ITEM_VALUE +" FROM "+ PARAM_TABLE +" " +
                 "WHERE "+ PARAM_TABLE_ITEM_PK +" = "+String.valueOf(PASS_PROTECTED_STATUS), null);
         cursor.moveToFirst();
-        if (cursor.getInt(0) != 1)
-            temp = Boolean.FALSE;
+        temp = cursor.getInt(0);
         db.close();
         cursor.close();
         return temp;
     }
+
+    public void changePassProtectedStatus(int newstatus){
+        SQLiteDatabase db = getWritableDatabase();
+        db.execSQL("UPDATE "+ PARAM_TABLE +" SET "+ PARAM_TABLE_ITEM_VALUE +"="+
+                String.valueOf(newstatus)+" WHERE "+PARAM_TABLE_ITEM_PK+"=" +
+                String.valueOf(PASS_PROTECTED_STATUS));
+        db.close();
+    }
+
 }
