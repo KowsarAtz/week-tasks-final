@@ -15,6 +15,7 @@ import static com.atzandroid.weektasks.DbConstants.NOT_SET;
 import static com.atzandroid.weektasks.DbConstants.PARAM_TABLE;
 import static com.atzandroid.weektasks.DbConstants.PARAM_TABLE_ITEM_PK;
 import static com.atzandroid.weektasks.DbConstants.PARAM_TABLE_ITEM_VALUE;
+import static com.atzandroid.weektasks.DbConstants.PASSWORD_HASH;
 import static com.atzandroid.weektasks.DbConstants.PASS_PROTECTED_STATUS;
 
 public class WeekTasksDBHelper extends SQLiteOpenHelper {
@@ -57,6 +58,26 @@ public class WeekTasksDBHelper extends SQLiteOpenHelper {
                 String.valueOf(newstatus)+" WHERE "+PARAM_TABLE_ITEM_PK+"=" +
                 String.valueOf(PASS_PROTECTED_STATUS));
         db.close();
+    }
+
+    public void changePassword(int newpass){
+        SQLiteDatabase db = getWritableDatabase();
+        db.execSQL("UPDATE "+ PARAM_TABLE +" SET "+ PARAM_TABLE_ITEM_VALUE +"="+
+                String.valueOf(newpass)+" WHERE "+PARAM_TABLE_ITEM_PK+"=" +
+                String.valueOf(PASSWORD_HASH));
+        db.close();
+    }
+
+    public int getPassHash(){
+        int temp;
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT "+ PARAM_TABLE_ITEM_VALUE +" FROM "+ PARAM_TABLE +" " +
+                "WHERE "+ PARAM_TABLE_ITEM_PK +" = "+String.valueOf(PASSWORD_HASH), null);
+        cursor.moveToFirst();
+        temp = cursor.getInt(0);
+        db.close();
+        cursor.close();
+        return temp;
     }
 
 }
