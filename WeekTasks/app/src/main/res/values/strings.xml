@@ -1,4 +1,4 @@
 <resources>
-    <string name="app_name">WeekTasks</string>
+    <string name="app_name">WeeklyPlanner</string>
     <string name="dummy_string">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Purus sit amet luctus venenatis.</string>
 </resources>

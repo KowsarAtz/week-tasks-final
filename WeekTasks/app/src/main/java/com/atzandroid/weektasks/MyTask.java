@@ -36,7 +36,7 @@ public class MyTask {
 
     public static MyTask createRandomTask(){
         return new MyTask(dummyTitles[getRandomIntegerBetweenRange(0,5)]
-                , dummyTexts[getRandomIntegerBetweenRange(0,5)],
+                , dummyTexts[getRandomIntegerBetweenRange(0,5)] + dummyTexts[getRandomIntegerBetweenRange(0,5)],
                 dummyTimes[getRandomIntegerBetweenRange(0,5)]);
     }
 

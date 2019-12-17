@@ -1,103 +1,113 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="150dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@drawable/todo_task_background"
-    android:orientation="vertical"
-    android:layout_marginTop="10dp"
-    android:padding="5dp">
+    android:layout_marginTop="10dp">
 
-    <FrameLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:layout_marginTop="5dp">
-
-        <TextView
-            android:id="@+id/to_do_task_title"
-            android:layout_height="match_parent"
-            android:layout_width="wrap_content"
-            android:text="Done Task"
-            android:textColor="@color/tasky_blue"
-            android:fontFamily="@font/londrina_solid_regular"
-            android:textSize="20sp"
-            android:layout_marginLeft="10dp"
-            android:layout_gravity="left"/>
-
-        <TextView
-            android:id="@+id/to_do_task_time"
-            android:layout_height="match_parent"
-            android:layout_width="wrap_content"
-            android:text="8:30"
-            android:textColor="@color/tasky_blue"
-            android:fontFamily="@font/londrina_solid_regular"
-            android:textSize="20sp"
-            android:layout_marginRight="10dp"
-            android:layout_gravity="right"/>
-
-
-    </FrameLayout>
-
-    <TextView
-        android:id="@+id/to_do_task_text"
-        android:layout_height="0dp"
-        android:layout_width="match_parent"
-        android:layout_weight="1"
-        android:text="@string/dummy_string"
-        android:gravity="center_vertical"
-        android:textColor="@color/tasky_dark"
-        android:fontFamily="@font/londrina_solid_regular"
-        android:textSize="15sp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"/>
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:layout_marginBottom="5dp">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="5dp"
+        android:background="@drawable/todo_task_background">
 
         <FrameLayout
-            android:layout_height="match_parent"
-            android:layout_width="65dp"
-            android:background="@drawable/add_alarm_back"
-            android:layout_marginLeft="10dp"
-            android:layout_gravity="left">
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginTop="5dp">
 
-            <ImageView
-                android:layout_width="20dp"
+            <TextView
+                android:id="@+id/to_do_task_title"
                 android:layout_height="match_parent"
-                app:srcCompat="@drawable/ic_bell"
-                android:scaleType="fitCenter"
-                android:layout_gravity="left"
-                android:layout_marginLeft="8dp"
-                />
+                android:layout_width="wrap_content"
+                android:text="Done Task"
+                android:textColor="@color/tasky_blue"
+                android:fontFamily="@font/londrina_solid_regular"
+                android:textSize="20sp"
+                android:layout_marginLeft="10dp"
+                android:layout_gravity="left"/>
+
+            <TextView
+                android:id="@+id/to_do_task_time"
+                android:layout_height="match_parent"
+                android:layout_width="wrap_content"
+                android:text="8:30"
+                android:textColor="@color/tasky_blue"
+                android:fontFamily="@font/londrina_solid_regular"
+                android:textSize="20sp"
+                android:layout_marginRight="10dp"
+                android:layout_gravity="right"/>
+
+
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/to_do_task_text"
+            android:layout_height="0dp"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:text="@string/dummy_string"
+            android:maxLines="2"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:textColor="@color/tasky_dark"
+            android:fontFamily="@font/londrina_solid_regular"
+            android:textSize="15sp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"/>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginBottom="5dp">
+
+            <FrameLayout
+                android:layout_height="match_parent"
+                android:layout_width="65dp"
+                android:background="@drawable/add_alarm_back"
+                android:layout_marginLeft="10dp"
+                android:layout_gravity="left">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="match_parent"
+                    app:srcCompat="@drawable/ic_bell"
+                    android:scaleType="fitCenter"
+                    android:layout_gravity="left"
+                    android:layout_marginLeft="8dp"
+                    />
+
+                <ImageButton
+                    android:id="@+id/add_reminder"
+                    android:layout_width="20dp"
+                    android:layout_height="match_parent"
+                    app:srcCompat="@drawable/ic_add_alarm"
+                    android:scaleType="fitCenter"
+                    android:layout_gravity="right"
+                    android:background="@null"
+                    android:layout_marginRight="8dp"
+                    />
+
+            </FrameLayout>
 
             <ImageButton
-                android:id="@+id/add_reminder"
-                android:layout_width="20dp"
+                android:id="@+id/forward_task"
+                android:layout_width="40dp"
                 android:layout_height="match_parent"
-                app:srcCompat="@drawable/ic_add_alarm"
+                app:srcCompat="@drawable/ic_forward"
                 android:scaleType="fitCenter"
                 android:layout_gravity="right"
                 android:background="@null"
                 android:layout_marginRight="8dp"
                 />
 
+
         </FrameLayout>
 
-        <ImageButton
-            android:id="@+id/forward_task"
-            android:layout_width="40dp"
-            android:layout_height="match_parent"
-            app:srcCompat="@drawable/ic_forward"
-            android:scaleType="fitCenter"
-            android:layout_gravity="right"
-            android:background="@null"
-            android:layout_marginRight="8dp"
-            />
+    </LinearLayout>
 
 
-    </FrameLayout>
 
 
-</LinearLayout>
+</FrameLayout>

@@ -3,6 +3,10 @@ package com.atzandroid.weektasks;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.animation.Animator;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -53,23 +57,23 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void openMenu() {
-        menu_layout.setVisibility(View.VISIBLE);
-        Animation openMenu = AnimationUtils.loadAnimation(this, R.anim.open_menu);
-        Animation menuBtnAnim = AnimationUtils.loadAnimation(this, R.anim.menu_button);
-        menu_layout.startAnimation(openMenu);
-        options_menu_btn.startAnimation(menuBtnAnim);
-        options_menu_btn.setScaleY(-1);
-    }
-
-    private void closeMenu() {
-        Animation openMenu = AnimationUtils.loadAnimation(this, R.anim.open_menu);
-        Animation closeMenu = AnimationUtils.loadAnimation(this, R.anim.close_menu);
-        menu_layout.startAnimation(closeMenu);
-        options_menu_btn.startAnimation(openMenu);
-        menu_layout.setVisibility(View.GONE);
-        options_menu_btn.setScaleY(1);
-    }
+//    private void openMenu() {
+//        menu_layout.setVisibility(View.VISIBLE);
+//        Animation openMenu = AnimationUtils.loadAnimation(this, R.anim.open_menu);
+//        Animation menuBtnAnim = AnimationUtils.loadAnimation(this, R.anim.menu_button);
+//        menu_layout.startAnimation(openMenu);
+//        options_menu_btn.startAnimation(menuBtnAnim);
+//        options_menu_btn.setScaleY(-1);
+//    }
+//
+//    private void closeMenu() {
+//        Animation openMenu = AnimationUtils.loadAnimation(this, R.anim.open_menu);
+//        Animation closeMenu = AnimationUtils.loadAnimation(this, R.anim.close_menu);
+//        menu_layout.startAnimation(closeMenu);
+//        options_menu_btn.startAnimation(openMenu);
+//        menu_layout.setVisibility(View.GONE);
+//        options_menu_btn.setScaleY(1);
+//    }
 
     private void initDayBtns() {
         day_btns = new Button[7];
@@ -137,6 +141,63 @@ public class MainActivity extends AppCompatActivity {
         Button btn = day_btns[index];
         btn.setBackgroundResource(R.drawable.day_button_unselected);
         btn.setTextColor(getResources().getColor(R.color.black));
+    }
+
+    private void openMenu(){
+        final View view = (View) menu_layout;
+        ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(view, "translationY", -3000);
+        objectAnimator.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+                options_menu_btn.setScaleY(-1);
+            }
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                view.setVisibility(View.VISIBLE);
+            }
+            @Override
+            public void onAnimationCancel(Animator animation) {
+            }
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+            }
+        });
+        objectAnimator.setDuration(10);
+        AnimatorSet animatorSet = new AnimatorSet();
+        animatorSet.playSequentially(
+                objectAnimator,
+                ObjectAnimator.ofFloat(view, "translationY", 0f).setDuration(250)
+        );
+        animatorSet.start();
+    }
+
+    private void closeMenu(){
+        AnimatorSet animatorSet = new AnimatorSet();
+        final View view = (View) menu_layout;
+        ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(view, "translationY", -3000);
+        objectAnimator.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+            }
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                view.setVisibility(View.GONE);
+                options_menu_btn.setScaleY(1);
+            }
+            @Override
+            public void onAnimationCancel(Animator animation) {
+            }
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+            }
+        });
+        objectAnimator.setDuration(250);
+
+        animatorSet.playSequentially(
+                ObjectAnimator.ofFloat(view, "translationY", 0f).setDuration(10),
+                objectAnimator
+        );
+        animatorSet.start();
     }
 
 }

@@ -138,117 +138,71 @@
     <LinearLayout
         android:orientation="vertical"
         android:id="@+id/options_menu_layout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/menu_background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#90000000"
         android:layout_marginTop="60dp"
-        android:layout_marginRight="10dp"
         android:layout_gravity="top|right"
-        android:paddingHorizontal="40dp"
         >
 
         <Button
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Change Password"
+            android:background="@color/tasky_dark"
             style="@style/Widget.AppCompat.Button.Borderless"
             android:textSize="19sp"
             android:textAllCaps="false"
             app:fontFamily="@font/londrina_solid_regular"
             android:layout_gravity="center"
-            android:textAlignment="center"
-            android:textColor="@color/tasky_yellow"
+            android:gravity="left|center_vertical"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:textColor="@color/white"
             />
-
         <View
             android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:background="@color/tasky_yellow"/>
+            android:layout_height="1dp"
+            android:background="@color/white"/>
 
         <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Setting"
-            style="@style/Widget.AppCompat.Button.Borderless"
-            android:textSize="19sp"
-            android:textAllCaps="false"
-            app:fontFamily="@font/londrina_solid_regular"
-            android:layout_gravity="center"
-            android:textAlignment="center"
-            android:textColor="@color/tasky_yellow"
-            />
-
-        <View
             android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:background="@color/tasky_yellow"/>
-
-        <Button
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="About"
+            android:background="@color/tasky_dark"
             style="@style/Widget.AppCompat.Button.Borderless"
             android:textSize="19sp"
             android:textAllCaps="false"
             app:fontFamily="@font/londrina_solid_regular"
             android:layout_gravity="center"
-            android:textAlignment="center"
-            android:textColor="@color/tasky_yellow"
+            android:gravity="left|center_vertical"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:textColor="@color/white"
             />
-
         <View
             android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:background="@color/tasky_yellow"/>
-
+            android:layout_height="1dp"
+            android:background="@color/white"/>
         <Button
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text=". . ."
+            android:background="@color/tasky_dark"
             style="@style/Widget.AppCompat.Button.Borderless"
             android:textSize="19sp"
             android:textAllCaps="false"
             app:fontFamily="@font/londrina_solid_regular"
             android:layout_gravity="center"
-            android:textAlignment="center"
-            android:textColor="@color/tasky_yellow"
+            android:gravity="left|center_vertical"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:textColor="@color/white"
             />
-
         <View
             android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:background="@color/tasky_yellow"/>
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=". . ."
-            style="@style/Widget.AppCompat.Button.Borderless"
-            android:textSize="19sp"
-            android:textAllCaps="false"
-            app:fontFamily="@font/londrina_solid_regular"
-            android:layout_gravity="center"
-            android:textAlignment="center"
-            android:textColor="@color/tasky_yellow"
-            />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:background="@color/tasky_yellow"/>
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=". . ."
-            style="@style/Widget.AppCompat.Button.Borderless"
-            android:textSize="19sp"
-            android:textAllCaps="false"
-            app:fontFamily="@font/londrina_solid_regular"
-            android:layout_gravity="center"
-            android:textAlignment="center"
-            android:textColor="@color/tasky_yellow"
-            />
+            android:layout_height="1dp"
+            android:background="@color/white"/>
 
     </LinearLayout>
 
@@ -258,11 +212,12 @@
         android:background="@color/tasky_dark">
 
         <ImageView
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            app:srcCompat="@drawable/ic_tasky_logo"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            app:srcCompat="@drawable/ic_calendar"
             android:layout_gravity="center_vertical|left"
-            android:layout_marginLeft="14dp"/>
+            android:layout_marginLeft="14dp"
+            android:layout_marginTop="5dp"/>
 
         <ImageButton
             android:id="@+id/options_menu_btn"
