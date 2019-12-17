@@ -7,6 +7,7 @@ import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,6 +37,46 @@ public class ToDoTaskAdapter extends RecyclerView.Adapter<ToDoTaskAdapter.MyTask
     @SuppressLint("ClickableViewAccessibility")
     public void onBindViewHolder(final MyTaskViewHolder viewHolder, final int i) {
 
+        final ObjectAnimator swipeLeftAnim = ObjectAnimator.ofFloat(viewHolder.toDoTaskLayer, "translationX", -170f)
+                .setDuration(400);
+        swipeLeftAnim.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation){
+                viewHolder.toDoTaskHiddenLayer.setVisibility(View.VISIBLE);
+                viewHolder.swipeBtn.setScaleX(-1);
+                viewHolder.swiped = Boolean.TRUE;
+            }
+            @Override
+            public void onAnimationEnd(Animator animation) {
+            }
+            @Override
+            public void onAnimationCancel(Animator animation) {
+            }
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+            }
+        });
+
+        final ObjectAnimator swipeRightAnim = ObjectAnimator.ofFloat(viewHolder.toDoTaskLayer, "translationX", 0f)
+                .setDuration(400);
+        swipeRightAnim.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+            }
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                viewHolder.toDoTaskHiddenLayer.setVisibility(View.GONE);
+                viewHolder.swipeBtn.setScaleX(1);
+                viewHolder.swiped = Boolean.FALSE;
+            }
+            @Override
+            public void onAnimationCancel(Animator animation) {
+            }
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+            }
+        });
+
         viewHolder.title.setText(myTaskList.get(i).getTitle());
         viewHolder.text.setText(myTaskList.get(i).getText());
         viewHolder.time.setText(myTaskList.get(i).getTime());
@@ -43,51 +84,29 @@ public class ToDoTaskAdapter extends RecyclerView.Adapter<ToDoTaskAdapter.MyTask
         OnSwipeTouchListener onSwipeTouchListener = new OnSwipeTouchListener(viewHolder.toDoTaskLayer.getContext()) {
             @Override
             public void onSwipeLeft() {
-                ObjectAnimator obj = ObjectAnimator.ofFloat(viewHolder.toDoTaskLayer, "translationX", -300f)
-                        .setDuration(400);
-                obj.addListener(new Animator.AnimatorListener() {
-                    @Override
-                    public void onAnimationStart(Animator animation){
-                        viewHolder.toDoTaskHiddenLayer.setVisibility(View.VISIBLE);
-                    }
-                    @Override
-                    public void onAnimationEnd(Animator animation) {
-                    }
-                    @Override
-                    public void onAnimationCancel(Animator animation) {
-                    }
-                    @Override
-                    public void onAnimationRepeat(Animator animation) {
-                    }
-                });
-                obj.start();
+                if (viewHolder.swiped)
+                    return;
+                swipeLeftAnim.start();
             }
             @Override
             public void onSwipeRight(){
-                ObjectAnimator obj = ObjectAnimator.ofFloat(viewHolder.toDoTaskLayer, "translationX", 0f)
-                        .setDuration(400);
-                obj.addListener(new Animator.AnimatorListener() {
-                    @Override
-                    public void onAnimationStart(Animator animation) {
-                    }
-                    @Override
-                    public void onAnimationEnd(Animator animation) {
-                        viewHolder.toDoTaskHiddenLayer.setVisibility(View.GONE);
-                    }
-                    @Override
-                    public void onAnimationCancel(Animator animation) {
-                    }
-                    @Override
-                    public void onAnimationRepeat(Animator animation) {
-                    }
-                });
-                obj.start();
+                if (viewHolder.swiped)
+                    swipeRightAnim.start();
             }
         };
 
         viewHolder.toDoTaskLayer.setOnTouchListener(onSwipeTouchListener);
-//        viewHolder.title.setOnTouchListener(onSwipeTouchListener);
-//        viewHolder.text.setOnTouchListener(onSwipeTouchListener);
+        viewHolder.swipeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (viewHolder.swiped) {
+                    swipeRightAnim.start();
+                    return;
+                }
+                swipeLeftAnim.start();
+            }
+        });
+
     }
 
     @Override
@@ -96,10 +115,10 @@ public class ToDoTaskAdapter extends RecyclerView.Adapter<ToDoTaskAdapter.MyTask
     }
 
     public static class MyTaskViewHolder extends RecyclerView.ViewHolder {
-        TextView title;
-        TextView text;
-        TextView time;
+        TextView title, text, time;
         LinearLayout toDoTaskLayer, toDoTaskHiddenLayer;
+        ImageButton swipeBtn;
+        Boolean swiped;
 
         MyTaskViewHolder(View itemView) {
             super(itemView);
@@ -108,6 +127,8 @@ public class ToDoTaskAdapter extends RecyclerView.Adapter<ToDoTaskAdapter.MyTask
             text = itemView.findViewById(R.id.to_do_task_text);
             time = itemView.findViewById(R.id.to_do_task_time);
             toDoTaskHiddenLayer = itemView.findViewById(R.id.to_do_task_hidden_layer);
+            swipeBtn = itemView.findViewById(R.id.swipe_left_task_btn);
+            swiped = Boolean.FALSE;
         }
     }
 

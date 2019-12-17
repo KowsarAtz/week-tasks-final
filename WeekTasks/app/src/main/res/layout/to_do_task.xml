@@ -14,6 +14,39 @@
         android:padding="5dp"
         android:background="@drawable/todo_task_hiddenlayer">
 
+        <ImageButton
+            android:layout_width="30dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/ic_edit"
+            android:scaleType="fitCenter"
+            android:layout_gravity="right"
+            android:background="@null"
+            android:layout_marginRight="8dp"
+            />
+
+        <ImageButton
+            android:layout_width="30dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/ic_copy"
+            android:scaleType="fitCenter"
+            android:layout_gravity="right"
+            android:background="@null"
+            android:layout_marginRight="8dp"
+            />
+
+        <ImageButton
+            android:layout_width="30dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/ic_delete"
+            android:scaleType="fitCenter"
+            android:layout_gravity="right"
+            android:background="@null"
+            android:layout_marginRight="8dp"
+            />
+
     </LinearLayout>
 
     <LinearLayout
@@ -104,10 +137,10 @@
             </FrameLayout>
 
             <ImageButton
-                android:id="@+id/forward_task"
-                android:layout_width="40dp"
+                android:id="@+id/swipe_left_task_btn"
+                android:layout_width="25dp"
                 android:layout_height="match_parent"
-                app:srcCompat="@drawable/ic_forward"
+                app:srcCompat="@drawable/ic_left"
                 android:scaleType="fitCenter"
                 android:layout_gravity="right"
                 android:background="@null"
