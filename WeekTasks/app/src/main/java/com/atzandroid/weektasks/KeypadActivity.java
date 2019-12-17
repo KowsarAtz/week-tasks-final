@@ -109,24 +109,24 @@ public class KeypadActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (enteringPasswordStatus == CHOOSING){
                     if(enteringPasswordString.length() < MIN_PASS_LENGTH){
-                        shakeView(enteringPassTW, "MINIMUM 4 DIGITS!", "- - - -" ,R.color.red_warning, Boolean.FALSE);
+                        shakeView(enteringPassTW, "MINIMUM 4 DIGITS!", "- - - - - - - -" ,R.color.red_warning, Boolean.FALSE);
                         enteringPasswordString.setLength(0);
                         return;
                     }
                     if(enteringPasswordString.length() > MAX_PASS_LENGTH){
-                        shakeView(enteringPassTW, "MAXIMUM 8 DIGITS!", "- - - -" ,R.color.red_warning, Boolean.FALSE);
+                        shakeView(enteringPassTW, "MAXIMUM 8 DIGITS!", "- - - - - - - -" ,R.color.red_warning, Boolean.FALSE);
                         enteringPasswordString.setLength(0);
                         return;
                     }
                     tempPass = enteringPasswordString.toString().hashCode();
-                    shakeView(enteringPassTW, "REPEAT", "- - - -", R.color.green_approved, Boolean.FALSE);
+                    shakeView(enteringPassTW, "REPEAT", "- - - - - - - -", R.color.green_approved, Boolean.FALSE);
                     enteringPasswordString.setLength(0);
                     enteringPasswordStatus = REPEATING;
                     return;
                 }
                 if (enteringPasswordStatus == REPEATING){
                     if (enteringPasswordString.toString().hashCode() != tempPass){
-                        shakeView(enteringPassTW, "NO MATCH! TRY AGAIN", "- - - -" ,R.color.red_warning, Boolean.FALSE);
+                        shakeView(enteringPassTW, "NO MATCH! TRY AGAIN", "- - - - - - - -" ,R.color.red_warning, Boolean.FALSE);
                         enteringPasswordString.setLength(0);
                         return;
                     }
@@ -137,7 +137,7 @@ public class KeypadActivity extends AppCompatActivity {
                 }
                 if (enteringPasswordStatus == ACTIVE){
                     if (enteringPasswordString.toString().hashCode() != dbHelper.getPassHash()){
-                        shakeView(enteringPassTW, "WRONG! TRY AGAIN", "- - - -" ,R.color.red_warning, Boolean.FALSE);
+                        shakeView(enteringPassTW, "WRONG! TRY AGAIN", "- - - - - - - -" ,R.color.red_warning, Boolean.FALSE);
                         enteringPasswordString.setLength(0);
                         return;
                     }
@@ -350,7 +350,7 @@ public class KeypadActivity extends AppCompatActivity {
         if (enteringPasswordStatus != DEACTIVE){
             if (enteringPasswordStatus == CHOOSING) {
                 if (enteringPasswordString.length() >= MAX_PASS_LENGTH) {
-                    shakeView(enteringPassTW, "MAXIMUM 8 DIGITS!", "- - - -", R.color.red_warning, Boolean.FALSE);
+                    shakeView(enteringPassTW, "MAXIMUM 8 DIGITS!", "- - - - - - - -", R.color.red_warning, Boolean.FALSE);
                     enteringPasswordString.setLength(0);
                     return;
                 }
@@ -365,8 +365,8 @@ public class KeypadActivity extends AppCompatActivity {
         for(int i = 0; i < enteringPasswordString.length() ; i++){
             string.append("* ");
         }
-        if(enteringPasswordString.length() < MIN_PASS_LENGTH){
-            for(int i = 0; i < MIN_PASS_LENGTH - enteringPasswordString.length(); i++){
+        if(enteringPasswordString.length() < MAX_PASS_LENGTH){
+            for(int i = 0; i < MAX_PASS_LENGTH - enteringPasswordString.length(); i++){
                 string.append("- ");
             }
         }

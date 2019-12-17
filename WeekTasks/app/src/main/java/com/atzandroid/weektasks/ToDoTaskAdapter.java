@@ -4,6 +4,8 @@ import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.provider.AlarmClock;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -77,6 +79,27 @@ public class ToDoTaskAdapter extends RecyclerView.Adapter<ToDoTaskAdapter.MyTask
             }
         });
 
+        final ObjectAnimator swipeRightAnimTickTask = ObjectAnimator.ofFloat(viewHolder.toDoTaskLayer, "translationX", 170f)
+                .setDuration(400);
+        swipeRightAnimTickTask.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+            }
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                ObjectAnimator.ofFloat(viewHolder.toDoTaskLayer, "translationX", 0f)
+                        .setDuration(400).start();
+
+                // to be completed (open tick task dialog)
+            }
+            @Override
+            public void onAnimationCancel(Animator animation) {
+            }
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+            }
+        });
+
         viewHolder.title.setText(myTaskList.get(i).getTitle());
         viewHolder.text.setText(myTaskList.get(i).getText());
         viewHolder.time.setText(myTaskList.get(i).getTime());
@@ -92,6 +115,9 @@ public class ToDoTaskAdapter extends RecyclerView.Adapter<ToDoTaskAdapter.MyTask
             public void onSwipeRight(){
                 if (viewHolder.swiped)
                     swipeRightAnim.start();
+                else{
+                    swipeRightAnimTickTask.start();
+                }
             }
         };
 
@@ -107,6 +133,18 @@ public class ToDoTaskAdapter extends RecyclerView.Adapter<ToDoTaskAdapter.MyTask
             }
         });
 
+        viewHolder.addReminder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // to be completed
+                // just for test
+                Intent intent = new Intent(AlarmClock.ACTION_SET_ALARM);
+                intent.putExtra(AlarmClock.EXTRA_MINUTES, 59);
+                intent.putExtra(AlarmClock.EXTRA_HOUR, 23);
+                viewHolder.addReminder.getContext().startActivity(intent);
+            }
+        });
+
     }
 
     @Override
@@ -116,8 +154,8 @@ public class ToDoTaskAdapter extends RecyclerView.Adapter<ToDoTaskAdapter.MyTask
 
     public static class MyTaskViewHolder extends RecyclerView.ViewHolder {
         TextView title, text, time;
-        LinearLayout toDoTaskLayer, toDoTaskHiddenLayer;
-        ImageButton swipeBtn;
+        LinearLayout toDoTaskLayer, toDoTaskHiddenLayer, toDoTaskTickHiddenLayer;
+        ImageButton swipeBtn, addReminder;
         Boolean swiped;
 
         MyTaskViewHolder(View itemView) {
@@ -127,7 +165,9 @@ public class ToDoTaskAdapter extends RecyclerView.Adapter<ToDoTaskAdapter.MyTask
             text = itemView.findViewById(R.id.to_do_task_text);
             time = itemView.findViewById(R.id.to_do_task_time);
             toDoTaskHiddenLayer = itemView.findViewById(R.id.to_do_task_hidden_layer);
+            toDoTaskTickHiddenLayer = itemView.findViewById(R.id.to_do_task_tick_hidden_layer);
             swipeBtn = itemView.findViewById(R.id.swipe_left_task_btn);
+            addReminder = itemView.findViewById(R.id.add_reminder);
             swiped = Boolean.FALSE;
         }
     }

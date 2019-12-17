@@ -102,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
             btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    int temp = Integer.valueOf((String) v.getTag());
+                    int temp = Integer.parseInt((String) v.getTag());
                     if(temp != selected_day) {
                         select_button(temp);
                         updateFragment(temp);
