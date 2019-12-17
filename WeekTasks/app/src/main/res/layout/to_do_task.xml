@@ -6,6 +6,18 @@
     android:layout_marginTop="10dp">
 
     <LinearLayout
+        android:id="@+id/to_do_task_hidden_layer"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="5dp"
+        android:background="@drawable/todo_task_hiddenlayer">
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/to_do_task_layer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -106,8 +118,5 @@
         </FrameLayout>
 
     </LinearLayout>
-
-
-
 
 </FrameLayout>

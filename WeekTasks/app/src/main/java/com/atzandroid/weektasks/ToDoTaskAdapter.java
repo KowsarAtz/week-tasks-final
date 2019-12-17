@@ -1,9 +1,15 @@
 package com.atzandroid.weektasks;
 
+import android.animation.Animator;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
+import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -27,11 +33,61 @@ public class ToDoTaskAdapter extends RecyclerView.Adapter<ToDoTaskAdapter.MyTask
     }
 
     @Override
+    @SuppressLint("ClickableViewAccessibility")
     public void onBindViewHolder(final MyTaskViewHolder viewHolder, final int i) {
 
         viewHolder.title.setText(myTaskList.get(i).getTitle());
         viewHolder.text.setText(myTaskList.get(i).getText());
         viewHolder.time.setText(myTaskList.get(i).getTime());
+
+        OnSwipeTouchListener onSwipeTouchListener = new OnSwipeTouchListener(viewHolder.toDoTaskLayer.getContext()) {
+            @Override
+            public void onSwipeLeft() {
+                ObjectAnimator obj = ObjectAnimator.ofFloat(viewHolder.toDoTaskLayer, "translationX", -300f)
+                        .setDuration(400);
+                obj.addListener(new Animator.AnimatorListener() {
+                    @Override
+                    public void onAnimationStart(Animator animation){
+                        viewHolder.toDoTaskHiddenLayer.setVisibility(View.VISIBLE);
+                    }
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                    }
+                    @Override
+                    public void onAnimationCancel(Animator animation) {
+                    }
+                    @Override
+                    public void onAnimationRepeat(Animator animation) {
+                    }
+                });
+                obj.start();
+            }
+            @Override
+            public void onSwipeRight(){
+                ObjectAnimator obj = ObjectAnimator.ofFloat(viewHolder.toDoTaskLayer, "translationX", 0f)
+                        .setDuration(400);
+                obj.addListener(new Animator.AnimatorListener() {
+                    @Override
+                    public void onAnimationStart(Animator animation) {
+                    }
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        viewHolder.toDoTaskHiddenLayer.setVisibility(View.GONE);
+                    }
+                    @Override
+                    public void onAnimationCancel(Animator animation) {
+                    }
+                    @Override
+                    public void onAnimationRepeat(Animator animation) {
+                    }
+                });
+                obj.start();
+            }
+        };
+
+        viewHolder.toDoTaskLayer.setOnTouchListener(onSwipeTouchListener);
+//        viewHolder.title.setOnTouchListener(onSwipeTouchListener);
+//        viewHolder.text.setOnTouchListener(onSwipeTouchListener);
     }
 
     @Override
@@ -43,12 +99,15 @@ public class ToDoTaskAdapter extends RecyclerView.Adapter<ToDoTaskAdapter.MyTask
         TextView title;
         TextView text;
         TextView time;
+        LinearLayout toDoTaskLayer, toDoTaskHiddenLayer;
 
         MyTaskViewHolder(View itemView) {
             super(itemView);
+            toDoTaskLayer = itemView.findViewById(R.id.to_do_task_layer);
             title = itemView.findViewById(R.id.to_do_task_title);
             text = itemView.findViewById(R.id.to_do_task_text);
             time = itemView.findViewById(R.id.to_do_task_time);
+            toDoTaskHiddenLayer = itemView.findViewById(R.id.to_do_task_hidden_layer);
         }
     }
 
