@@ -270,57 +270,7 @@ public class KeypadActivity extends AppCompatActivity {
                 }
                 ((TextView) view).setText(defaultStr);
                 ((TextView) view).setTextColor(getResources().getColor(R.color.white));
-            }
-            @Override
-            public void onAnimationCancel(Animator animation) {
-            }
-            @Override
-            public void onAnimationRepeat(Animator animation) {
-            }
-        });
-        AnimatorSet animatorSet = new AnimatorSet();
-        int t = SHAKE_DURATION/10;
-        animatorSet.playSequentially(
-                objectAnimatorStart,
-                ObjectAnimator.ofFloat(view, "translationX", SHAKE_OFFSET).setDuration(t),
-                ObjectAnimator.ofFloat(view, "translationX", -SHAKE_OFFSET).setDuration(t),
-                ObjectAnimator.ofFloat(view, "translationX", SHAKE_OFFSET).setDuration(t),
-                ObjectAnimator.ofFloat(view, "translationX", -SHAKE_OFFSET).setDuration(t),
-                ObjectAnimator.ofFloat(view, "translationX", SHAKE_OFFSET).setDuration(t),
-                ObjectAnimator.ofFloat(view, "translationX", -SHAKE_OFFSET).setDuration(t),
-                ObjectAnimator.ofFloat(view, "translationX", 0f).setDuration(t),
-                objectAnimatorEnd.setDuration(SHAKE_DURATION)
-        );
-        animatorSet.start();
-    }
-
-    private void shakeViewNextActivity(final View view, final String message, final String defaultStr, final int color){
-        ObjectAnimator objectAnimatorStart = ObjectAnimator.ofFloat(view, "translationX", -SHAKE_OFFSET);
-        objectAnimatorStart.addListener(new Animator.AnimatorListener() {
-            @Override
-            public void onAnimationStart(Animator animation) {
-                ((TextView) view).setText(message);
-                ((TextView) view).setTextColor(getResources().getColor(color));
-            }
-            @Override
-            public void onAnimationEnd(Animator animation) {
-            }
-            @Override
-            public void onAnimationCancel(Animator animation) {
-            }
-            @Override
-            public void onAnimationRepeat(Animator animation) {
-            }
-        });
-        ObjectAnimator objectAnimatorEnd = ObjectAnimator.ofFloat(view, "translationX", 0f);
-        objectAnimatorEnd.addListener(new Animator.AnimatorListener() {
-            @Override
-            public void onAnimationStart(Animator animation) {
-            }
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                ((TextView) view).setText(defaultStr);
-                ((TextView) view).setTextColor(getResources().getColor(R.color.white));
+                setEnteringPasswordTW();
             }
             @Override
             public void onAnimationCancel(Animator animation) {
