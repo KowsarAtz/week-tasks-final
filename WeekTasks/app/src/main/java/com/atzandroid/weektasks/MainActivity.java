@@ -57,24 +57,6 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-//    private void openMenu() {
-//        menu_layout.setVisibility(View.VISIBLE);
-//        Animation openMenu = AnimationUtils.loadAnimation(this, R.anim.open_menu);
-//        Animation menuBtnAnim = AnimationUtils.loadAnimation(this, R.anim.menu_button);
-//        menu_layout.startAnimation(openMenu);
-//        options_menu_btn.startAnimation(menuBtnAnim);
-//        options_menu_btn.setScaleY(-1);
-//    }
-//
-//    private void closeMenu() {
-//        Animation openMenu = AnimationUtils.loadAnimation(this, R.anim.open_menu);
-//        Animation closeMenu = AnimationUtils.loadAnimation(this, R.anim.close_menu);
-//        menu_layout.startAnimation(closeMenu);
-//        options_menu_btn.startAnimation(openMenu);
-//        menu_layout.setVisibility(View.GONE);
-//        options_menu_btn.setScaleY(1);
-//    }
-
     private void initDayBtns() {
         day_btns = new Button[7];
         for (int day=SAT; day<= FRI; day++){

@@ -4,7 +4,8 @@
     package="com.atzandroid.weektasks">
 
     <dist:module dist:instant="true" />
-    <uses-permission android:name="com.android.alarm.permission.SET_ALARM"/>
+
+    <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
 
     <application
         android:allowBackup="true"
@@ -13,7 +14,8 @@
         android:roundIcon="@drawable/ic_calendar"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".KeypadActivity"></activity>
+        <activity android:name=".TestActivity"></activity>
+        <activity android:name=".KeypadActivity" />
         <activity android:name=".SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,6 +24,12 @@
             </intent-filter>
         </activity>
         <activity android:name=".MainActivity" />
+
+        <receiver android:name=".MyTestAlarmReceiver"
+            android:enabled="true"
+            android:exported="true"
+            />
+
     </application>
 
 </manifest>
