@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -50,6 +51,10 @@ public class ToDoTaskAdapter extends RecyclerView.Adapter<ToDoTaskAdapter.MyTask
         viewHolder.body.setText(myTaskList.get(i).getBody());
         viewHolder.toDotime.setText(myTaskList.get(i).getToDoTime());
         viewHolder.pk = myTaskList.get(i).getPk();
+        viewHolder.hasAlarm = myTaskList.get(i).getHas_alarm();
+
+        if(viewHolder.hasAlarm == 1)
+            viewHolder.alarmStatusLayout.setVisibility(View.VISIBLE);
 
     }
 
@@ -161,17 +166,17 @@ public class ToDoTaskAdapter extends RecyclerView.Adapter<ToDoTaskAdapter.MyTask
             }
         });
 
-        viewHolder.addReminder.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // to be completed
-                // just for test
-                Intent intent = new Intent(AlarmClock.ACTION_SET_ALARM);
-                intent.putExtra(AlarmClock.EXTRA_MINUTES, 59);
-                intent.putExtra(AlarmClock.EXTRA_HOUR, 23);
-                viewHolder.addReminder.getContext().startActivity(intent);
-            }
-        });
+//        viewHolder.addReminder.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                // to be completed
+//                // just for test
+//                Intent intent = new Intent(AlarmClock.ACTION_SET_ALARM);
+//                intent.putExtra(AlarmClock.EXTRA_MINUTES, 59);
+//                intent.putExtra(AlarmClock.EXTRA_HOUR, 23);
+//                viewHolder.addReminder.getContext().startActivity(intent);
+//            }
+//        });
 
         viewHolder.deleteTaskBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -198,11 +203,12 @@ public class ToDoTaskAdapter extends RecyclerView.Adapter<ToDoTaskAdapter.MyTask
     }
 
     public static class MyTaskViewHolder extends RecyclerView.ViewHolder {
-        int pk;
+        int pk, hasAlarm;
         TextView title, body, toDotime;
         LinearLayout toDoTaskLayer, toDoTaskHiddenLayer, toDoTaskTickHiddenLayer;
         ImageButton swipeBtn, addReminder, deleteTaskBtn, editTaskBtn;
         Boolean swiped;
+        FrameLayout alarmStatusLayout;
 
         MyTaskViewHolder(View itemView) {
             super(itemView);
@@ -216,6 +222,7 @@ public class ToDoTaskAdapter extends RecyclerView.Adapter<ToDoTaskAdapter.MyTask
             addReminder = itemView.findViewById(R.id.add_reminder);
             deleteTaskBtn = itemView.findViewById(R.id.delete_task_btn);
             editTaskBtn = itemView.findViewById(R.id.edit_task_btn);
+            alarmStatusLayout = itemView.findViewById(R.id.alarm_status_layout);
             swiped = Boolean.FALSE;
         }
     }

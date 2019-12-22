@@ -131,6 +131,8 @@
             android:layout_marginBottom="5dp">
 
             <FrameLayout
+                android:visibility="gone"
+                android:id="@+id/alarm_status_layout"
                 android:layout_height="match_parent"
                 android:layout_width="65dp"
                 android:background="@drawable/add_alarm_back"
@@ -150,7 +152,7 @@
                     android:id="@+id/add_reminder"
                     android:layout_width="20dp"
                     android:layout_height="match_parent"
-                    app:srcCompat="@drawable/ic_add_alarm"
+                    app:srcCompat="@drawable/ic_tick_black"
                     android:scaleType="fitCenter"
                     android:layout_gravity="right"
                     android:background="@null"
