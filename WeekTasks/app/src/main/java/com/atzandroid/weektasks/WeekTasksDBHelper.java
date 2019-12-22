@@ -15,6 +15,8 @@ import static com.atzandroid.weektasks.DbConstants.DROP_TABLES;
 import static com.atzandroid.weektasks.DbConstants.INIT_TABLE_PARAMS_1;
 import static com.atzandroid.weektasks.DbConstants.INIT_TABLE_PARAMS_2;
 import static com.atzandroid.weektasks.DbConstants.INIT_TABLE_PARAMS_3;
+import static com.atzandroid.weektasks.DbConstants.INIT_TABLE_PARAMS_4;
+import static com.atzandroid.weektasks.DbConstants.LAST_DAY_VISTIED;
 import static com.atzandroid.weektasks.DbConstants.NOT_SET;
 import static com.atzandroid.weektasks.DbConstants.OVER_DUE_STATE;
 import static com.atzandroid.weektasks.DbConstants.PARAM_TABLE;
@@ -45,6 +47,7 @@ public class WeekTasksDBHelper extends SQLiteOpenHelper {
         db.execSQL(INIT_TABLE_PARAMS_1);
         db.execSQL(INIT_TABLE_PARAMS_2);
         db.execSQL(INIT_TABLE_PARAMS_3);
+        db.execSQL(INIT_TABLE_PARAMS_4);
         Log.i(DB_NAME, PARAM_TABLE + " table created and initialized.");
         db.execSQL(CREATE_TABLE_WEEK_TASKS);
         Log.i(DB_NAME, WEEK_TASKS_TABLE + " table created and initialized.");
@@ -95,6 +98,33 @@ public class WeekTasksDBHelper extends SQLiteOpenHelper {
         db.close();
         cursor.close();
         return temp;
+    }
+
+    public int getLastVisited(){
+        int temp;
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT "+ PARAM_TABLE_ITEM_VALUE +" FROM "+ PARAM_TABLE +" " +
+                "WHERE "+ PARAM_TABLE_ITEM_PK +" = "+String.valueOf(LAST_DAY_VISTIED), null);
+        cursor.moveToFirst();
+        temp = cursor.getInt(0);
+        db.close();
+        cursor.close();
+        return temp;
+    }
+
+    public void setLastVisited(int today){
+        SQLiteDatabase db = getWritableDatabase();
+        db.execSQL("UPDATE "+ PARAM_TABLE +" SET "+ PARAM_TABLE_ITEM_VALUE +"="+
+                String.valueOf(today)+" WHERE "+PARAM_TABLE_ITEM_PK+"=" +
+                String.valueOf(LAST_DAY_VISTIED));
+        db.close();
+    }
+
+    public void deleteAllTask(){
+        SQLiteDatabase db = getWritableDatabase();
+        db.execSQL("DELETE FROM "+ WEEK_TASKS_TABLE);
+        if(db.isOpen())
+            db.close();
     }
 
     public void createTask(String title, String body, String toDoTime, int day, int hasAlarm, String alarmTime){

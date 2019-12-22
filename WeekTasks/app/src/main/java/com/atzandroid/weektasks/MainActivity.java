@@ -53,6 +53,12 @@ public class MainActivity extends AppCompatActivity {
         queryLayout.setVisibility(View.VISIBLE);
         initDayBtns();
         setToday();
+
+        WeekTasksDBHelper dbHelper = new WeekTasksDBHelper(this);
+        if(dbHelper.getLastVisited() > SAT && today == SAT)
+            dbHelper.deleteAllTask();
+        dbHelper.setLastVisited(today);
+
         (new WeekTasksDBHelper(this)).overDuePreviousTasks(today);
         setDayButtonListeners();
         initOptionsMenu();
@@ -72,6 +78,12 @@ public class MainActivity extends AppCompatActivity {
                 queryLayout.setVisibility(View.VISIBLE);
                 initDayBtns();
                 setToday();
+
+                WeekTasksDBHelper dbHelper = new WeekTasksDBHelper(MainActivity.this);
+                if(dbHelper.getLastVisited() > SAT && today == SAT)
+                    dbHelper.deleteAllTask();
+                dbHelper.setLastVisited(today);
+
                 (new WeekTasksDBHelper(MainActivity.this)).overDuePreviousTasks(today);
                 setDayButtonListeners();
                 initOptionsMenu();

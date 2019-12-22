@@ -30,6 +30,12 @@
             android:name=".MyTestAlarmReceiver"
             android:enabled="true"
             android:exported="true" />
+
+        <receiver
+            android:name=".MyNotificationPublisher"
+            android:enabled="true"
+            android:exported="true"/>
+
     </application>
 
 </manifest>

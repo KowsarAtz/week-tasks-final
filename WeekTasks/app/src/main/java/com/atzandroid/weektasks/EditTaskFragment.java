@@ -1,6 +1,13 @@
 package com.atzandroid.weektasks;
 
+import android.app.AlarmManager;
+import android.app.Notification;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.SystemClock;
+import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,12 +17,17 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.NotificationCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+
+import java.util.Calendar;
 
 public class EditTaskFragment extends Fragment {
 
     private static final int NONE = -1;
+    private static final String NOTIFICATION_CHANNEL_ID = "notif"
+            , default_notification_channel_id = "default";
 
     private TextView titleTW, bodyTW, toDoTimeTWHour, editTaskDayNameTW,
             toDoTimeTWMinute, alarmTimeTWHour, alarmTimeTWMinute;
@@ -23,6 +35,7 @@ public class EditTaskFragment extends Fragment {
     private FragmentTransaction mainActivityFragmentTransaction;
 
     static int activeObjectPK = 0;
+    private int activeObjectDay;
 
     @Nullable
     @Override
@@ -71,7 +84,7 @@ public class EditTaskFragment extends Fragment {
         MyTask task = (new WeekTasksDBHelper(getActivity())).getMyTask(activeObjectPK);
         titleTW.setText(task.getTitle());
         bodyTW.setText(task.getBody());
-        titleTW.setText(task.getTitle());
+        activeObjectDay = task.getDay();
         String[] toDoTimeParts = task.getToDoTime().split(":");
         if(toDoTimeParts.length == 2) {
             toDoTimeTWHour.setText(String.valueOf(toDoTimeParts[0]));
@@ -148,11 +161,12 @@ public class EditTaskFragment extends Fragment {
         WeekTasksDBHelper dbHelper = new WeekTasksDBHelper(getActivity());
 
         if(activeObjectPK != 0){
-            cancelAlarm(activeObjectPK);
+//            cancelAlarm(activeObjectPK);
             (new WeekTasksDBHelper(getActivity())).deleteTask(activeObjectPK);
         }
 
         dbHelper.createTask(title, body, createTimeFormat(toDoTimeHourInt, toDoTimeMinuteInt), MainActivity.lastActiveFragmentDay, hasAlarm, alarmTime); //to be completed . . .(day)
+        setAlarm(alarmTimeHourInt, alarmTimeMinuteInt, activeObjectDay, title);
 
         if(activeObjectPK == 0)
             Toast.makeText(getActivity(), "New Task Created",Toast.LENGTH_LONG).show();
@@ -171,7 +185,42 @@ public class EditTaskFragment extends Fragment {
         return p1+":"+p2;
     }
 
-    public void cancelAlarm(int pk){
-        // to be completed
+//    public void cancelAlarm(int pk){
+//        // to be completed
+//    }
+
+    private void setAlarm(int hour, int minute, int day, String title){
+        int dayDiff = day - MainActivity.today;
+        long milisecDiff = 0;
+        Calendar now = Calendar.getInstance();
+        Calendar deadline = Calendar.getInstance();
+        deadline.set(Calendar.HOUR_OF_DAY, hour);
+        deadline.set(Calendar.MINUTE, minute);
+        deadline.set(Calendar.SECOND, 0);
+        milisecDiff = deadline.getTimeInMillis() - now.getTimeInMillis() + dayDiff * 24 * 60 * 60;
+        scheduleNotification(getNotification( title ) , (int) (milisecDiff/1000) );
+//        Toast.makeText(getActivity(), "Alarm Set!", Toast.LENGTH_SHORT).show();
+    }
+
+    private void scheduleNotification (Notification notification , int delayInt) {
+        long delay = delayInt * 1000;
+        Intent notificationIntent = new Intent(getActivity(), MyNotificationPublisher.class) ;
+        notificationIntent.putExtra(MyNotificationPublisher. NOTIFICATION_ID , 1 ) ;
+        notificationIntent.putExtra(MyNotificationPublisher. NOTIFICATION , notification) ;
+        PendingIntent pendingIntent = PendingIntent. getBroadcast ( getActivity(), 0 , notificationIntent , PendingIntent. FLAG_UPDATE_CURRENT ) ;
+        long futureInMillis = SystemClock. elapsedRealtime () + delay ;
+        AlarmManager alarmManager = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE) ;
+        assert alarmManager != null;
+        alarmManager.set(AlarmManager. ELAPSED_REALTIME_WAKEUP , futureInMillis , pendingIntent) ;
+    }
+    private Notification getNotification (String content) {
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(getActivity(), default_notification_channel_id ) ;
+        builder.setContentTitle( "Task Reminder" ) ;
+        builder.setContentText(content) ;
+        builder.setSmallIcon(R.drawable. ic_launcher_foreground ) ;
+        builder.setAutoCancel( true ) ;
+        builder.setChannelId(NOTIFICATION_CHANNEL_ID) ;
+        builder.setSound(Settings.System.DEFAULT_NOTIFICATION_URI);
+        return builder.build();
     }
 }

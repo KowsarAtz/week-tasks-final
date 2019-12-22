@@ -34,6 +34,7 @@ class DbConstants {
     static final short PASS_PROTECTED_STATUS = 1;
     static final short CURRENT_WEEK_NUM = 2;
     static final short PASSWORD_HASH = 3;
+    static final short LAST_DAY_VISTIED = 4;
 
     static final String CREATE_TABLE_PARAMS =
             "CREATE TABLE "+ PARAM_TABLE + "(" +
@@ -57,6 +58,12 @@ class DbConstants {
                     + " ("+ PARAM_TABLE_ITEM_PK + " , " + PARAM_TABLE_ITEM_VALUE +") "
                     + "VALUES " + "(" + String.valueOf(PASSWORD_HASH)
                     + " , " + String.valueOf(NOT_SET) + ")";
+
+    static final String INIT_TABLE_PARAMS_4 =
+            "INSERT INTO " + PARAM_TABLE
+                    + " ("+ PARAM_TABLE_ITEM_PK + " , " + PARAM_TABLE_ITEM_VALUE +") "
+                    + "VALUES " + "(" + String.valueOf(LAST_DAY_VISTIED)
+                    + " , " + String.valueOf(0) + ")";
 
     static final String CREATE_TABLE_WEEK_TASKS =
             "CREATE TABLE "+ WEEK_TASKS_TABLE + "(" +
