@@ -18,6 +18,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import java.util.Calendar;
+
 public class MainActivity extends AppCompatActivity {
 
     private static final int NONE = -1, SAT = 0, SUN = 1, MON = 2, TUE = 3, WED = 4, THU = 5, FRI = 6;
@@ -50,9 +52,9 @@ public class MainActivity extends AppCompatActivity {
         initQueryLayout();
 
         queryLayout.setVisibility(View.VISIBLE);
-
         initDayBtns();
         setToday();
+        (new WeekTasksDBHelper(this)).overDuePreviousTasks(today);
         setDayButtonListeners();
         initOptionsMenu();
     }
@@ -115,10 +117,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setToday(){
-//        int day = Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
-//        if (day == 7)
-//            day = 0;
-        int day = MON; //just for testing
+        int day = Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
+        if (day == 7)
+            day = 0;
         if (today != NONE)
             day_btns[today].setText(days[day]);
         day_btns[day].setText(TODAY);

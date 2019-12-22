@@ -16,6 +16,7 @@ import static com.atzandroid.weektasks.DbConstants.INIT_TABLE_PARAMS_1;
 import static com.atzandroid.weektasks.DbConstants.INIT_TABLE_PARAMS_2;
 import static com.atzandroid.weektasks.DbConstants.INIT_TABLE_PARAMS_3;
 import static com.atzandroid.weektasks.DbConstants.NOT_SET;
+import static com.atzandroid.weektasks.DbConstants.OVER_DUE_STATE;
 import static com.atzandroid.weektasks.DbConstants.PARAM_TABLE;
 import static com.atzandroid.weektasks.DbConstants.PARAM_TABLE_ITEM_PK;
 import static com.atzandroid.weektasks.DbConstants.PARAM_TABLE_ITEM_VALUE;
@@ -151,6 +152,14 @@ public class WeekTasksDBHelper extends SQLiteOpenHelper {
     public void updateTaskState(int pk, int newNewState){
         SQLiteDatabase db = getWritableDatabase();
         db.execSQL("UPDATE "+ WEEK_TASKS_TABLE +" SET "+ WEEK_TASKS_TABLE_STATE +"="+newNewState+" WHERE "+ WEEK_TASKS_TABLE_PK +"="+pk);
+        if(db.isOpen())
+            db.close();
+    }
+
+    public void overDuePreviousTasks(int today){
+        SQLiteDatabase db = getWritableDatabase();
+        db.execSQL("UPDATE "+ WEEK_TASKS_TABLE +" SET "+ WEEK_TASKS_TABLE_STATE +"="+OVER_DUE_STATE
+                +" WHERE "+ WEEK_TASKS_TABLE_DAY +"<"+today+" and "+WEEK_TASKS_TABLE_STATE+"="+TO_DO_STATE);
         if(db.isOpen())
             db.close();
     }
