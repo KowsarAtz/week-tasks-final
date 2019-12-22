@@ -6,4 +6,14 @@
     android:layout_height="match_parent"
     tools:context=".TestActivity">
 
+    <TextView
+        android:layout_margin="50dp"
+        android:id="@+id/testTextView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="TextView"
+        android:textSize="30sp"
+        android:background="@color/tasky_grey"
+        tools:layout_editor_absoluteX="166dp"
+        tools:layout_editor_absoluteY="383dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

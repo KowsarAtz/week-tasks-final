@@ -5,6 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 import static com.atzandroid.weektasks.DbConstants.CREATE_TABLE_PARAMS;
+import static com.atzandroid.weektasks.DbConstants.CREATE_TABLE_WEEK_TASKS;
 import static com.atzandroid.weektasks.DbConstants.DB_NAME;
 import static com.atzandroid.weektasks.DbConstants.DB_VERSION;
 import static com.atzandroid.weektasks.DbConstants.DROP_TABLES;
@@ -17,6 +18,7 @@ import static com.atzandroid.weektasks.DbConstants.PARAM_TABLE_ITEM_PK;
 import static com.atzandroid.weektasks.DbConstants.PARAM_TABLE_ITEM_VALUE;
 import static com.atzandroid.weektasks.DbConstants.PASSWORD_HASH;
 import static com.atzandroid.weektasks.DbConstants.PASS_PROTECTED_STATUS;
+import static com.atzandroid.weektasks.DbConstants.WEEK_TASKS_TABLE;
 
 public class WeekTasksDBHelper extends SQLiteOpenHelper {
 
@@ -31,6 +33,8 @@ public class WeekTasksDBHelper extends SQLiteOpenHelper {
         db.execSQL(INIT_TABLE_PARAMS_2);
         db.execSQL(INIT_TABLE_PARAMS_3);
         Log.i(DB_NAME, PARAM_TABLE + " table created and initialized.");
+        db.execSQL(CREATE_TABLE_WEEK_TASKS);
+        Log.i(DB_NAME, WEEK_TASKS_TABLE + " table created and initialized.");
     }
 
     @Override
@@ -79,5 +83,10 @@ public class WeekTasksDBHelper extends SQLiteOpenHelper {
         cursor.close();
         return temp;
     }
+
+//    public void test(){
+//        SQLiteDatabase db = getWritableDatabase();
+//        return;
+//    }
 
 }

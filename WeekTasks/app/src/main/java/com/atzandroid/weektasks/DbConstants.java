@@ -12,6 +12,11 @@ class DbConstants {
 
     // Week Tasks Table and its Columns
     static final String WEEK_TASKS_TABLE = "week_tasks";
+    static final String WEEK_TASKS_TABLE_PK = "pk";
+    static final String WEEK_TASKS_TABLE_TITLE = "title";
+    static final String WEEK_TASKS_TABLE_BODY = "body";
+    static final String WEEK_TASKS_TABLE_TO_DO_TIME = "to_do_time";
+    static final String WEEK_TASKS_TABLE_HAS_ALARM = "has_alarm";
 
     static final short NOT_PASS_PROTECTED = -1;
     static final short NOT_SET = 0;
@@ -45,7 +50,13 @@ class DbConstants {
                     + "VALUES " + "(" + String.valueOf(PASSWORD_HASH)
                     + " , " + String.valueOf(NOT_SET) + ")";
 
-    //static final String INIT_TABLE_PARAMS = INIT_TABLE_PARAMS_1 + "; " + INIT_TABLE_PARAMS_2 + "; " + INIT_TABLE_PARAMS_3 + ";";
+    static final String CREATE_TABLE_WEEK_TASKS =
+            "CREATE TABLE "+ WEEK_TASKS_TABLE + "(" +
+                    WEEK_TASKS_TABLE_PK +" INTEGER PRIMARY KEY," +
+                    WEEK_TASKS_TABLE_TITLE +" TEXT," +
+                    WEEK_TASKS_TABLE_BODY +" TEXT," +
+                    WEEK_TASKS_TABLE_TO_DO_TIME +" TEXT," +
+                    WEEK_TASKS_TABLE_HAS_ALARM +" INTEGER NOT NULL" + ");";
 
     static final String DROP_TABLES =
             "DROP TABLE IF EXISTS "+ PARAM_TABLE +"; " +
