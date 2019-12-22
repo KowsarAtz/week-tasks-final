@@ -164,7 +164,8 @@ public class EditTaskFragment extends Fragment {
         }
 
         dbHelper.createTask(title, body, createTimeFormat(toDoTimeHourInt, toDoTimeMinuteInt), MainActivity.lastActiveFragmentDay, hasAlarm, alarmTime);
-        setAlarm(alarmTimeHourInt, alarmTimeMinuteInt, activeObjectDay, title);
+        if (hasAlarm == 1)
+            setAlarm(alarmTimeHourInt, alarmTimeMinuteInt, activeObjectDay, title);
 
         if(activeObjectPK == 0)
             Toast.makeText(getActivity(), "New Task Created",Toast.LENGTH_LONG).show();
@@ -192,6 +193,8 @@ public class EditTaskFragment extends Fragment {
         deadline.set(Calendar.MINUTE, minute);
         deadline.set(Calendar.SECOND, 0);
         milisecDiff = deadline.getTimeInMillis() - now.getTimeInMillis() + dayDiff * 24 * 60 * 60;
+        if (milisecDiff < 0)
+            return;
         scheduleNotification(getNotification( title ) , (int) (milisecDiff/1000) );
     }
 
