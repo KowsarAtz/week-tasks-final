@@ -13,8 +13,10 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -25,6 +27,12 @@ public class MainActivity extends AppCompatActivity {
     static int today = NONE;
     private static int selected_day = NONE;
     private static final String TODAY = "Today";
+
+    private LinearLayout queryLayout;
+    private Button queryYesBtn, getQueryCancelBtn;
+    private int queryPK = 0;
+
+    FrameLayout fragmentLayout;
 
     LinearLayout menu_layout;
     ImageView options_menu_btn;
@@ -37,10 +45,50 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 //        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
 //            getWindow().setStatusBarColor(getResources().getColor(R.color.tasky_dark));
+
+        initQueryLayout();
+
+        queryLayout.setVisibility(View.VISIBLE);
+
         initDayBtns();
         setToday();
         setDayButtonListeners();
         initOptionsMenu();
+    }
+
+    public void showQueryDialog(int pk){
+        fragmentLayout.setVisibility(View.GONE);
+        queryPK = pk;
+    }
+
+    private void initQueryLayout() {
+        fragmentLayout = findViewById(R.id.day_activities_fragment);
+        queryLayout = findViewById(R.id.ask_delete_dialog_layout);
+        queryYesBtn = findViewById(R.id.ask_delete_dialog_yes_btn);
+        getQueryCancelBtn = findViewById(R.id.ask_delete_dialog_cancel_btn);
+
+        queryYesBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (queryPK == 0)
+                    return;
+                (new WeekTasksDBHelper(MainActivity.this)).deleteTask(queryPK);
+                Toast.makeText(MainActivity.this, "Task removed!", Toast.LENGTH_LONG).show();
+                updateFragment(lastActiveFragmentDay);
+                fragmentLayout.setVisibility(View.VISIBLE);
+                queryPK = 0;
+            }
+        });
+        getQueryCancelBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (queryPK == 0)
+                    return;
+                updateFragment(lastActiveFragmentDay);
+                fragmentLayout.setVisibility(View.VISIBLE);
+                queryPK = 0;
+            }
+        });
     }
 
     private void initOptionsMenu(){

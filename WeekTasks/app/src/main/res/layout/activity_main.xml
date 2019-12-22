@@ -126,11 +126,80 @@
 
         </HorizontalScrollView>
 
+
+
         <FrameLayout
-            android:id="@+id/day_activities_fragment"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"/>
+            android:layout_weight="1">
+
+            <LinearLayout
+                android:visibility="visible"
+                android:id="@+id/decide_password_dialoge"
+                android:orientation="vertical"
+                android:layout_width="350dp"
+                android:layout_height="120dp"
+                android:layout_marginBottom="50dp"
+                android:layout_gravity="center"
+                android:background="@drawable/dialoge_background">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Are you sure?"
+                    android:padding="20dp"
+                    android:fontFamily="@font/londrina_solid_regular"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:background="@color/tasky_dark_blue"/>
+
+                <LinearLayout
+                    android:id="@+id/ask_delete_dialog_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:orientation="horizontal"
+                    android:layout_weight="1">
+
+                    <Button
+                        android:id="@+id/ask_delete_dialog_cancel_btn"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent"
+                        android:text="CANCEL"
+                        android:textSize="20sp"
+                        app:fontFamily="@font/londrina_solid_regular"
+                        android:textColor="@color/white"
+                        style="@style/Widget.AppCompat.Button.Borderless"/>
+
+                    <Button
+                        android:id="@+id/ask_delete_dialog_yes_btn"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent"
+                        android:text="YES, DELETE !"
+                        android:textSize="20sp"
+                        app:fontFamily="@font/londrina_solid_regular"
+                        android:textColor="@color/white"
+                        style="@style/Widget.AppCompat.Button.Borderless"/>
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <FrameLayout
+                android:id="@+id/day_activities_fragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+        </FrameLayout>
 
 
     </LinearLayout>
@@ -229,5 +298,6 @@
             android:layout_marginRight="14dp"/>
 
     </FrameLayout>
+
 
 </FrameLayout>

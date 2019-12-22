@@ -1,7 +1,6 @@
 package com.atzandroid.weektasks;
 
 import android.animation.Animator;
-import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -38,6 +37,18 @@ public class ToDoTaskAdapter extends RecyclerView.Adapter<ToDoTaskAdapter.MyTask
     @Override
     @SuppressLint("ClickableViewAccessibility")
     public void onBindViewHolder(final MyTaskViewHolder viewHolder, final int i) {
+
+
+        setListeners(viewHolder);
+
+        viewHolder.title.setText(myTaskList.get(i).getTitle());
+        viewHolder.body.setText(myTaskList.get(i).getBody());
+        viewHolder.toDotime.setText(myTaskList.get(i).getToDoTime());
+        viewHolder.pk = myTaskList.get(i).getPk();
+
+    }
+
+    public void setListeners(final MyTaskViewHolder viewHolder){
 
         final ObjectAnimator swipeLeftAnim = ObjectAnimator.ofFloat(viewHolder.toDoTaskLayer, "translationX", -170f)
                 .setDuration(400);
@@ -100,10 +111,6 @@ public class ToDoTaskAdapter extends RecyclerView.Adapter<ToDoTaskAdapter.MyTask
             }
         });
 
-        viewHolder.title.setText(myTaskList.get(i).getTitle());
-        viewHolder.text.setText(myTaskList.get(i).getText());
-        viewHolder.time.setText(myTaskList.get(i).getTime());
-
         OnSwipeTouchListener onSwipeTouchListener = new OnSwipeTouchListener(viewHolder.toDoTaskLayer.getContext()) {
             @Override
             public void onSwipeLeft() {
@@ -145,6 +152,12 @@ public class ToDoTaskAdapter extends RecyclerView.Adapter<ToDoTaskAdapter.MyTask
             }
         });
 
+        viewHolder.deleteTaskBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mainActivity.showQueryDialog(viewHolder.pk);
+            }
+        });
     }
 
     @Override
@@ -153,21 +166,23 @@ public class ToDoTaskAdapter extends RecyclerView.Adapter<ToDoTaskAdapter.MyTask
     }
 
     public static class MyTaskViewHolder extends RecyclerView.ViewHolder {
-        TextView title, text, time;
+        int pk;
+        TextView title, body, toDotime;
         LinearLayout toDoTaskLayer, toDoTaskHiddenLayer, toDoTaskTickHiddenLayer;
-        ImageButton swipeBtn, addReminder;
+        ImageButton swipeBtn, addReminder, deleteTaskBtn;
         Boolean swiped;
 
         MyTaskViewHolder(View itemView) {
             super(itemView);
             toDoTaskLayer = itemView.findViewById(R.id.to_do_task_layer);
             title = itemView.findViewById(R.id.to_do_task_title);
-            text = itemView.findViewById(R.id.to_do_task_text);
-            time = itemView.findViewById(R.id.to_do_task_time);
+            body = itemView.findViewById(R.id.to_do_task_text);
+            toDotime = itemView.findViewById(R.id.to_do_task_time);
             toDoTaskHiddenLayer = itemView.findViewById(R.id.to_do_task_hidden_layer);
             toDoTaskTickHiddenLayer = itemView.findViewById(R.id.to_do_task_tick_hidden_layer);
             swipeBtn = itemView.findViewById(R.id.swipe_left_task_btn);
             addReminder = itemView.findViewById(R.id.add_reminder);
+            deleteTaskBtn = itemView.findViewById(R.id.delete_task_btn);
             swiped = Boolean.FALSE;
         }
     }

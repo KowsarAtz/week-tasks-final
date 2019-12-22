@@ -30,7 +30,7 @@ public class DoneTaskAdapter extends RecyclerView.Adapter<DoneTaskAdapter.MyTask
     public void onBindViewHolder(final MyTaskViewHolder viewHolder, final int i) {
 
         viewHolder.title.setText(myTaskList.get(i).getTitle());
-//        viewHolder.text.setText(myTaskList.get(i).getText());
+//        viewHolder.body.setText(myTaskList.get(i).getText());
 
     }
 
@@ -47,7 +47,7 @@ public class DoneTaskAdapter extends RecyclerView.Adapter<DoneTaskAdapter.MyTask
             super(itemView);
 //            label = itemView.findViewById(R.id.medical_service_label);
             title = itemView.findViewById(R.id.done_task_title);
-//            text = itemView.findViewById(R.id.card_body);
+//            body = itemView.findViewById(R.id.card_body);
         }
     }
 
