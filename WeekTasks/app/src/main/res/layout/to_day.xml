@@ -66,19 +66,20 @@
                 android:layout_gravity="left"
                 />
 
+            <ImageView
+                android:id="@+id/done_task_list_empty_img_today"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                app:srcCompat="@drawable/ic_empty"
+                android:layout_gravity="center"
+                android:scaleType="fitCenter"
+                />
+
             <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="18dp"
                 android:id="@+id/done_tasks_recyclerview"/>
-
-            <!--    <ImageView-->
-            <!--        android:layout_width="80dp"-->
-            <!--        android:layout_height="80dp"-->
-            <!--        app:srcCompat="@drawable/ic_undraw_no_data_qbuo"-->
-            <!--        android:layout_gravity="center"-->
-            <!--        android:scaleType="fitCenter"-->
-            <!--        />-->
 
         </LinearLayout>
 

@@ -254,9 +254,10 @@
             android:layout_height="1dp"
             android:background="@color/white"/>
         <Button
+            android:id="@+id/increment_day_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text=". . ."
+            android:text="test / tomorrow"
             android:background="@color/tasky_dark"
             style="@style/Widget.AppCompat.Button.Borderless"
             android:textSize="19sp"

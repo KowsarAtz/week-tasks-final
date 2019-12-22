@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,15 +17,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.atzandroid.weektasks.DbConstants.DONE_STATE;
 import static com.atzandroid.weektasks.DbConstants.TO_DO_STATE;
 
 public class TodayFragment extends Fragment {
     private List<MyTask> myToDoTaskList, myDoneTaskList;
     private MainActivity mainActivity;
 
-//    private RecyclerView myDoneTasksListRV;
-//    private DoneTaskAdapter myDoneTasksAdapter;
-//    private LinearLayoutManager doneTasksLinearLayoutManager;
+    private RecyclerView myDoneTasksListRV;
+    private DoneTaskAdapter myDoneTasksAdapter;
+    private LinearLayoutManager doneTasksLinearLayoutManager;
 
     private RecyclerView toDoTasksListRV;
     private ToDoTaskAdapter toDoTasksAdapter;
@@ -40,11 +42,15 @@ public class TodayFragment extends Fragment {
 
         mainActivity = (MainActivity) getActivity();
 
-//        myDoneTasksListRV = view.findViewById(R.id.done_tasks_recyclerview);
-//        myDoneTasksAdapter = new DoneTaskAdapter(myTaskList, mainActivity);
-//        doneTasksLinearLayoutManager = new LinearLayoutManager(mainActivity, RecyclerView.VERTICAL, false);
-//        myDoneTasksListRV.setLayoutManager(doneTasksLinearLayoutManager);
-//        myDoneTasksListRV.setAdapter(myDoneTasksAdapter);
+        myDoneTaskList = (new WeekTasksDBHelper(getContext())).getDayTasks(MainActivity.lastActiveFragmentDay, DONE_STATE);
+        if (myDoneTaskList.size() != 0){
+            (view.findViewById(R.id.done_task_list_empty_img_today)).setVisibility(View.GONE);
+        }
+        myDoneTasksListRV = view.findViewById(R.id.done_tasks_recyclerview);
+        myDoneTasksAdapter = new DoneTaskAdapter(myDoneTaskList, mainActivity);
+        doneTasksLinearLayoutManager = new LinearLayoutManager(mainActivity, RecyclerView.VERTICAL, false);
+        myDoneTasksListRV.setLayoutManager(doneTasksLinearLayoutManager);
+        myDoneTasksListRV.setAdapter(myDoneTasksAdapter);
 
         myToDoTaskList = (new WeekTasksDBHelper(getContext())).getDayTasks(MainActivity.lastActiveFragmentDay, TO_DO_STATE);
         toDoTasksListRV = view.findViewById(R.id.todo_tasks_recyclerview);

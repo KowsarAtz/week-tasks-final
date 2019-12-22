@@ -41,22 +41,40 @@ public class MainActivity extends AppCompatActivity {
     ImageView options_menu_btn;
     private FragmentTransaction transaction;
     static int lastActiveFragmentDay = NONE;
+    private int test = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-//            getWindow().setStatusBarColor(getResources().getColor(R.color.tasky_dark));
-
         initQueryLayout();
-
         queryLayout.setVisibility(View.VISIBLE);
         initDayBtns();
         setToday();
         (new WeekTasksDBHelper(this)).overDuePreviousTasks(today);
         setDayButtonListeners();
         initOptionsMenu();
+
+        justToTest();
+
+    }
+
+    private void justToTest() {
+        ((Button) findViewById(R.id.increment_day_button)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                test = today + 1;
+                if(test == 7)
+                    test = 0;
+                initQueryLayout();
+                queryLayout.setVisibility(View.VISIBLE);
+                initDayBtns();
+                setToday();
+                (new WeekTasksDBHelper(MainActivity.this)).overDuePreviousTasks(today);
+                setDayButtonListeners();
+                initOptionsMenu();
+            }
+        });
     }
 
     public void showQueryDialog(int pk){
@@ -117,11 +135,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setToday(){
-        int day = Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
-        if (day == 7)
-            day = 0;
-        if (today != NONE)
-            day_btns[today].setText(days[day]);
+        int day = test; //for test
+        if(test == -1){
+            day = Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
+            if (day == 7)
+                day = 0;
+        }
+        if (today != NONE) { //for test
+            int temp = day - 1;
+            if(temp == -1)
+                temp = 6;
+            day_btns[today].setText(days[temp]);
+        }
         day_btns[day].setText(TODAY);
         select_button(day);
         today = day;
