@@ -137,4 +137,22 @@ public class WeekTasksDBHelper extends SQLiteOpenHelper {
             db.close();
     }
 
+    public MyTask getMyTask (int pk){
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM "+ WEEK_TASKS_TABLE +" WHERE "+ WEEK_TASKS_TABLE_PK +"="+pk, null);
+        MyTask task = null;
+        if(cursor.moveToNext())
+            task = new MyTask(cursor);
+        if(db.isOpen()) db.close();
+        cursor.close();
+        return task;
+    }
+
+    public void updateTaskState(int pk, int newNewState){
+        SQLiteDatabase db = getWritableDatabase();
+        db.execSQL("UPDATE "+ WEEK_TASKS_TABLE +" SET "+ WEEK_TASKS_TABLE_STATE +"="+newNewState+" WHERE "+ WEEK_TASKS_TABLE_PK +"="+pk);
+        if(db.isOpen())
+            db.close();
+    }
+
 }

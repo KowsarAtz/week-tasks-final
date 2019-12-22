@@ -28,6 +28,7 @@ public class NextDayFragment extends Fragment {
                 mainActivityFragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
                 if (mainActivityFragmentTransaction == null)
                     return;
+                EditTaskFragment.activeObjectPK = 0;
                 mainActivityFragmentTransaction.replace(R.id.day_activities_fragment, new EditTaskFragment());
                 mainActivityFragmentTransaction.commit();
             }

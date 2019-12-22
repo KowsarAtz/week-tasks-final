@@ -8,19 +8,24 @@ import android.provider.AlarmClock;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
+
+import static com.atzandroid.weektasks.DbConstants.DONE_STATE;
 
 public class ToDoTaskAdapter extends RecyclerView.Adapter<ToDoTaskAdapter.MyTaskViewHolder> {
 
     List<MyTask> myTaskList;
     MainActivity mainActivity;
+    FragmentTransaction transaction;
 
     public ToDoTaskAdapter(List<MyTask> myTasks, MainActivity mainActivity) {
         this.myTaskList = myTasks;
@@ -98,10 +103,26 @@ public class ToDoTaskAdapter extends RecyclerView.Adapter<ToDoTaskAdapter.MyTask
             }
             @Override
             public void onAnimationEnd(Animator animation) {
-                ObjectAnimator.ofFloat(viewHolder.toDoTaskLayer, "translationX", 0f)
-                        .setDuration(400).start();
-
-                // to be completed (open tick task dialog)
+                ObjectAnimator obj = ObjectAnimator.ofFloat(viewHolder.toDoTaskLayer, "translationX", 0f)
+                        .setDuration(400);
+                obj.addListener(new Animator.AnimatorListener() {
+                    @Override
+                    public void onAnimationStart(Animator animation) {
+                    }
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        (new WeekTasksDBHelper(mainActivity)).updateTaskState(viewHolder.pk, DONE_STATE);
+                        Toast.makeText(mainActivity, "Good Job!", Toast.LENGTH_LONG).show();
+                        mainActivity.updateFragment(MainActivity.lastActiveFragmentDay);
+                    }
+                    @Override
+                    public void onAnimationCancel(Animator animation) {
+                    }
+                    @Override
+                    public void onAnimationRepeat(Animator animation) {
+                    }
+                });
+                obj.start();
             }
             @Override
             public void onAnimationCancel(Animator animation) {
@@ -158,6 +179,17 @@ public class ToDoTaskAdapter extends RecyclerView.Adapter<ToDoTaskAdapter.MyTask
                 mainActivity.showQueryDialog(viewHolder.pk);
             }
         });
+
+        viewHolder.editTaskBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EditTaskFragment.activeObjectPK = viewHolder.pk;
+                transaction = mainActivity.getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.day_activities_fragment, new EditTaskFragment());
+                transaction.commit();
+            }
+        });
+
     }
 
     @Override
@@ -169,7 +201,7 @@ public class ToDoTaskAdapter extends RecyclerView.Adapter<ToDoTaskAdapter.MyTask
         int pk;
         TextView title, body, toDotime;
         LinearLayout toDoTaskLayer, toDoTaskHiddenLayer, toDoTaskTickHiddenLayer;
-        ImageButton swipeBtn, addReminder, deleteTaskBtn;
+        ImageButton swipeBtn, addReminder, deleteTaskBtn, editTaskBtn;
         Boolean swiped;
 
         MyTaskViewHolder(View itemView) {
@@ -183,6 +215,7 @@ public class ToDoTaskAdapter extends RecyclerView.Adapter<ToDoTaskAdapter.MyTask
             swipeBtn = itemView.findViewById(R.id.swipe_left_task_btn);
             addReminder = itemView.findViewById(R.id.add_reminder);
             deleteTaskBtn = itemView.findViewById(R.id.delete_task_btn);
+            editTaskBtn = itemView.findViewById(R.id.edit_task_btn);
             swiped = Boolean.FALSE;
         }
     }

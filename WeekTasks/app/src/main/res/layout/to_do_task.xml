@@ -36,6 +36,7 @@
         android:background="@drawable/todo_task_hiddenlayer">
 
         <ImageButton
+            android:id="@+id/edit_task_btn"
             android:layout_width="30dp"
             android:layout_height="0dp"
             android:layout_weight="1"
@@ -46,16 +47,16 @@
             android:layout_marginRight="8dp"
             />
 
-        <ImageButton
-            android:layout_width="30dp"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            app:srcCompat="@drawable/ic_copy"
-            android:scaleType="fitCenter"
-            android:layout_gravity="right"
-            android:background="@null"
-            android:layout_marginRight="8dp"
-            />
+<!--        <ImageButton-->
+<!--            android:layout_width="30dp"-->
+<!--            android:layout_height="0dp"-->
+<!--            android:layout_weight="1"-->
+<!--            app:srcCompat="@drawable/ic_copy"-->
+<!--            android:scaleType="fitCenter"-->
+<!--            android:layout_gravity="right"-->
+<!--            android:background="@null"-->
+<!--            android:layout_marginRight="8dp"-->
+<!--            />-->
 
         <ImageButton
             android:id="@+id/delete_task_btn"

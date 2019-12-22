@@ -17,12 +17,12 @@ public class EditTaskFragment extends Fragment {
 
     private static final int NONE = -1;
 
-    private TextView titleTW, bodyTW, toDoTimeTWHour,
+    private TextView titleTW, bodyTW, toDoTimeTWHour, editTaskDayNameTW,
             toDoTimeTWMinute, alarmTimeTWHour, alarmTimeTWMinute;
     private Button saveTaskBtn, cancelSaveTaskBtn;
     private FragmentTransaction mainActivityFragmentTransaction;
 
-    static Boolean createMode = Boolean.TRUE;
+    static int activeObjectPK = 0;
 
     @Nullable
     @Override
@@ -38,6 +38,7 @@ public class EditTaskFragment extends Fragment {
 
         saveTaskBtn = view.findViewById(R.id.edit_task_save_btn);
         cancelSaveTaskBtn = view.findViewById(R.id.edit_task_cancel_btn);
+        editTaskDayNameTW = view.findViewById(R.id.edit_task_day_name);
 
 
         mainActivityFragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
@@ -45,7 +46,6 @@ public class EditTaskFragment extends Fragment {
         saveTaskBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // to be completed ... (editing or creating?)
                 if (!createOrUpdateTask())
                     return;
                 getBackToPrevFragment();
@@ -59,26 +59,36 @@ public class EditTaskFragment extends Fragment {
             }
         });
 
+        setContents();
+
         return view;
     }
 
-    private void getBackToPrevFragment(){
-        if (mainActivityFragmentTransaction == null)
+    private void setContents(){
+        editTaskDayNameTW.setText(MainActivity.daysFullname[MainActivity.lastActiveFragmentDay]);
+        if(activeObjectPK==0)
             return;
-        if (MainActivity.today == MainActivity.lastActiveFragmentDay){
-            mainActivityFragmentTransaction.replace(R.id.day_activities_fragment, new TodayFragment());
-            mainActivityFragmentTransaction.commit();
-            return;
+        MyTask task = (new WeekTasksDBHelper(getActivity())).getMyTask(activeObjectPK);
+        titleTW.setText(task.getTitle());
+        bodyTW.setText(task.getBody());
+        titleTW.setText(task.getTitle());
+        String[] toDoTimeParts = task.getToDoTime().split(":");
+        if(toDoTimeParts.length == 2) {
+            toDoTimeTWHour.setText(String.valueOf(toDoTimeParts[0]));
+            toDoTimeTWMinute.setText(String.valueOf(toDoTimeParts[1]));
         }
-        mainActivityFragmentTransaction.replace(R.id.day_activities_fragment, new NextDayFragment());
-        mainActivityFragmentTransaction.commit();
+        String[] alarmTimeParts = task.getAlarmTime().split(":");
+        if(alarmTimeParts.length == 2) {
+            alarmTimeTWHour.setText(String.valueOf(alarmTimeParts[0]));
+            alarmTimeTWMinute.setText(String.valueOf(alarmTimeParts[1]));
+        }
+    }
+
+    private void getBackToPrevFragment(){
+        ((MainActivity) getActivity()).updateFragment(MainActivity.lastActiveFragmentDay);
     }
 
     public Boolean createOrUpdateTask(){
-
-        if(!createMode){
-            //to be competed . . . delete old one (postpone) and create a new one
-        }
 
         if (MainActivity.lastActiveFragmentDay == NONE){
             Toast.makeText(getActivity(), "Invalid Day!",Toast.LENGTH_LONG).show();
@@ -136,9 +146,15 @@ public class EditTaskFragment extends Fragment {
         }
         String alarmTime = (hasAlarm == 1 ? createTimeFormat(alarmTimeHourInt, alarmTimeMinuteInt) : "");
         WeekTasksDBHelper dbHelper = new WeekTasksDBHelper(getActivity());
+
+        if(activeObjectPK != 0){
+            cancelAlarm(activeObjectPK);
+            (new WeekTasksDBHelper(getActivity())).deleteTask(activeObjectPK);
+        }
+
         dbHelper.createTask(title, body, createTimeFormat(toDoTimeHourInt, toDoTimeMinuteInt), MainActivity.lastActiveFragmentDay, hasAlarm, alarmTime); //to be completed . . .(day)
 
-        if(createMode)
+        if(activeObjectPK == 0)
             Toast.makeText(getActivity(), "New Task Created",Toast.LENGTH_LONG).show();
         else
             Toast.makeText(getActivity(), "Task Updated",Toast.LENGTH_LONG).show();
@@ -153,5 +169,9 @@ public class EditTaskFragment extends Fragment {
         if(p2.length() == 1)
             p2 = "0"+p2;
         return p1+":"+p2;
+    }
+
+    public void cancelAlarm(int pk){
+        // to be completed
     }
 }

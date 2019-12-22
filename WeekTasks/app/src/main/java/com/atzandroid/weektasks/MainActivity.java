@@ -24,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
     private static int[] days_buttons_ids = {R.id.day_sat, R.id.day_sun, R.id.day_mon, R.id.day_tue, R.id.day_wed, R.id.day_thu, R.id.day_fri};
     private static Button[] day_btns;
     private static final String[] days = {"Sat", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri"};
+    static final String[] daysFullname = {"Saturday", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"};
     static int today = NONE;
     private static int selected_day = NONE;
     private static final String TODAY = "Today";
@@ -145,7 +146,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void updateFragment(int day) {
+    public void updateFragment(int day) {
         transaction = getSupportFragmentManager().beginTransaction();
         if(day == today) {
             transaction.replace(R.id.day_activities_fragment, new TodayFragment());
