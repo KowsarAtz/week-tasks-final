@@ -16,7 +16,9 @@ class DbConstants {
     static final String WEEK_TASKS_TABLE_TITLE = "title";
     static final String WEEK_TASKS_TABLE_BODY = "body";
     static final String WEEK_TASKS_TABLE_TO_DO_TIME = "to_do_time";
+    static final String WEEK_TASKS_TABLE_ALARM_TIME = "alarm_time";
     static final String WEEK_TASKS_TABLE_HAS_ALARM = "has_alarm";
+    static final String WEEK_TASKS_TABLE_DAY = "day";
 
     static final short NOT_PASS_PROTECTED = -1;
     static final short NOT_SET = 0;
@@ -56,6 +58,8 @@ class DbConstants {
                     WEEK_TASKS_TABLE_TITLE +" TEXT," +
                     WEEK_TASKS_TABLE_BODY +" TEXT," +
                     WEEK_TASKS_TABLE_TO_DO_TIME +" TEXT," +
+                    WEEK_TASKS_TABLE_ALARM_TIME +" TEXT," +
+                    WEEK_TASKS_TABLE_DAY +" INTEGER," +
                     WEEK_TASKS_TABLE_HAS_ALARM +" INTEGER NOT NULL" + ");";
 
     static final String DROP_TABLES =

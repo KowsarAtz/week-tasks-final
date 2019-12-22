@@ -33,6 +33,7 @@
                 android:layout_height="wrap_content">
 
                 <ImageButton
+                    android:id="@+id/today_task_add_btn"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:scaleType="fitXY"

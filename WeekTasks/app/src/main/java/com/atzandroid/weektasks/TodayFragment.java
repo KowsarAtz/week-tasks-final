@@ -4,10 +4,12 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -25,6 +27,9 @@ public class TodayFragment extends Fragment {
     private RecyclerView toDoTasksListRV;
     private ToDoTaskAdapter toDoTasksAdapter;
     private LinearLayoutManager toDoTasksLinearLayoutManager;
+
+    private ImageButton addTaskBtn;
+    private FragmentTransaction mainActivityFragmentTransaction;
 
     @Nullable
     @Override
@@ -46,6 +51,17 @@ public class TodayFragment extends Fragment {
         toDoTasksListRV.setLayoutManager(toDoTasksLinearLayoutManager);
         toDoTasksListRV.setAdapter(toDoTasksAdapter);
 
+        addTaskBtn = view.findViewById(R.id.today_task_add_btn);
+        addTaskBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mainActivityFragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+                if (mainActivityFragmentTransaction == null)
+                    return;
+                mainActivityFragmentTransaction.replace(R.id.day_activities_fragment, new EditTaskFragment());
+                mainActivityFragmentTransaction.commit();
+            }
+        });
 
         return view;
     }

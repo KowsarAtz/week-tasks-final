@@ -22,13 +22,14 @@ public class MainActivity extends AppCompatActivity {
     private static int[] days_buttons_ids = {R.id.day_sat, R.id.day_sun, R.id.day_mon, R.id.day_tue, R.id.day_wed, R.id.day_thu, R.id.day_fri};
     private static Button[] day_btns;
     private static final String[] days = {"Sat", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri"};
-    private static int today = NONE;
+    static int today = NONE;
     private static int selected_day = NONE;
     private static final String TODAY = "Today";
 
     LinearLayout menu_layout;
     ImageView options_menu_btn;
-    FragmentTransaction transaction;
+    private FragmentTransaction transaction;
+    static int lastActiveFragmentDay = NONE;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
         select_button(day);
         today = day;
         updateFragment(today);
+        lastActiveFragmentDay = day;
     }
 
     private void setDayButtonListeners(){
@@ -88,6 +90,7 @@ public class MainActivity extends AppCompatActivity {
                     if(temp != selected_day) {
                         select_button(temp);
                         updateFragment(temp);
+                        lastActiveFragmentDay = temp;
                     }
                 }
             });

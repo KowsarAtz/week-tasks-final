@@ -19,6 +19,13 @@ import static com.atzandroid.weektasks.DbConstants.PARAM_TABLE_ITEM_VALUE;
 import static com.atzandroid.weektasks.DbConstants.PASSWORD_HASH;
 import static com.atzandroid.weektasks.DbConstants.PASS_PROTECTED_STATUS;
 import static com.atzandroid.weektasks.DbConstants.WEEK_TASKS_TABLE;
+import static com.atzandroid.weektasks.DbConstants.WEEK_TASKS_TABLE_ALARM_TIME;
+import static com.atzandroid.weektasks.DbConstants.WEEK_TASKS_TABLE_BODY;
+import static com.atzandroid.weektasks.DbConstants.WEEK_TASKS_TABLE_DAY;
+import static com.atzandroid.weektasks.DbConstants.WEEK_TASKS_TABLE_HAS_ALARM;
+import static com.atzandroid.weektasks.DbConstants.WEEK_TASKS_TABLE_PK;
+import static com.atzandroid.weektasks.DbConstants.WEEK_TASKS_TABLE_TITLE;
+import static com.atzandroid.weektasks.DbConstants.WEEK_TASKS_TABLE_TO_DO_TIME;
 
 public class WeekTasksDBHelper extends SQLiteOpenHelper {
 
@@ -84,9 +91,20 @@ public class WeekTasksDBHelper extends SQLiteOpenHelper {
         return temp;
     }
 
-//    public void test(){
-//        SQLiteDatabase db = getWritableDatabase();
-//        return;
-//    }
+    public void createTask(String title, String body, String toDoTime, int day, int hasAlarm, String alarmTime){
+        SQLiteDatabase db = getWritableDatabase();
+        db.execSQL("INSERT INTO " + WEEK_TASKS_TABLE
+                + " (" + WEEK_TASKS_TABLE_TITLE
+                + " , " + WEEK_TASKS_TABLE_BODY + " , " + WEEK_TASKS_TABLE_TO_DO_TIME
+                + " , " + WEEK_TASKS_TABLE_ALARM_TIME
+                + " , " + WEEK_TASKS_TABLE_DAY
+                + " , " + WEEK_TASKS_TABLE_HAS_ALARM +") "
+                + "VALUES " + "('" + title + "' , '" + body
+                + "' , '" + toDoTime
+                + "' , '" + alarmTime + "' , "
+                + day + " , " + hasAlarm + ")");
+        db.close();
+        Log.i(DB_NAME, "new task created . . .");
+    }
 
 }
