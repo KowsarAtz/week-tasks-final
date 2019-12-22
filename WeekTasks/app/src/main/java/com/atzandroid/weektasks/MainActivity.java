@@ -32,8 +32,10 @@ public class MainActivity extends AppCompatActivity {
     private static final String TODAY = "Today";
 
     private LinearLayout queryLayout;
-    private Button queryYesBtn, getQueryCancelBtn;
+    private Button queryYesBtn, getQueryCancelBtn, aboutBtn;
     private int queryPK = 0;
+
+
 
     FrameLayout fragmentLayout;
 
@@ -123,6 +125,13 @@ public class MainActivity extends AppCompatActivity {
                     openMenu();
                 else
                     closeMenu();
+            }
+        });
+        aboutBtn = findViewById(R.id.about_btn);
+        aboutBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, AboutActivity.class));
             }
         });
     }

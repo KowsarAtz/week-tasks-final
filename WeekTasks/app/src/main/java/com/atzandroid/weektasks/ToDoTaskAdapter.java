@@ -166,18 +166,6 @@ public class ToDoTaskAdapter extends RecyclerView.Adapter<ToDoTaskAdapter.MyTask
             }
         });
 
-//        viewHolder.addReminder.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                // to be completed
-//                // just for test
-//                Intent intent = new Intent(AlarmClock.ACTION_SET_ALARM);
-//                intent.putExtra(AlarmClock.EXTRA_MINUTES, 59);
-//                intent.putExtra(AlarmClock.EXTRA_HOUR, 23);
-//                viewHolder.addReminder.getContext().startActivity(intent);
-//            }
-//        });
-
         viewHolder.deleteTaskBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

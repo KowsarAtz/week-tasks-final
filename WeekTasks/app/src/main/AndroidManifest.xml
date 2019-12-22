@@ -14,7 +14,8 @@
         android:roundIcon="@drawable/ic_calendar"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".TestActivity"></activity>
+        <activity android:name=".AboutActivity"></activity>
+        <activity android:name=".TestActivity" />
         <activity android:name=".KeypadActivity" />
         <activity android:name=".SplashActivity">
             <intent-filter>
@@ -25,11 +26,10 @@
         </activity>
         <activity android:name=".MainActivity" />
 
-        <receiver android:name=".MyTestAlarmReceiver"
+        <receiver
+            android:name=".MyTestAlarmReceiver"
             android:enabled="true"
-            android:exported="true"
-            />
-
+            android:exported="true" />
     </application>
 
 </manifest>
