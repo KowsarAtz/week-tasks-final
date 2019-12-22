@@ -132,7 +132,6 @@ public class EditTaskFragment extends Fragment {
         int hasAlarm = 0;
         if (alarmTimeMinute.length() != 0 && alarmTimeHour.length() != 0){
             hasAlarm = 1;
-            //to be completed . . . (set alarm)
         }else if((alarmTimeMinute.length() == 0 && alarmTimeHour.length() == 0)){
             // pass
         }else if((alarmTimeMinute.length() == 0 || alarmTimeHour.length() == 0)){
@@ -161,11 +160,10 @@ public class EditTaskFragment extends Fragment {
         WeekTasksDBHelper dbHelper = new WeekTasksDBHelper(getActivity());
 
         if(activeObjectPK != 0){
-//            cancelAlarm(activeObjectPK);
             (new WeekTasksDBHelper(getActivity())).deleteTask(activeObjectPK);
         }
 
-        dbHelper.createTask(title, body, createTimeFormat(toDoTimeHourInt, toDoTimeMinuteInt), MainActivity.lastActiveFragmentDay, hasAlarm, alarmTime); //to be completed . . .(day)
+        dbHelper.createTask(title, body, createTimeFormat(toDoTimeHourInt, toDoTimeMinuteInt), MainActivity.lastActiveFragmentDay, hasAlarm, alarmTime);
         setAlarm(alarmTimeHourInt, alarmTimeMinuteInt, activeObjectDay, title);
 
         if(activeObjectPK == 0)
@@ -185,10 +183,6 @@ public class EditTaskFragment extends Fragment {
         return p1+":"+p2;
     }
 
-//    public void cancelAlarm(int pk){
-//        // to be completed
-//    }
-
     private void setAlarm(int hour, int minute, int day, String title){
         int dayDiff = day - MainActivity.today;
         long milisecDiff = 0;
@@ -199,7 +193,6 @@ public class EditTaskFragment extends Fragment {
         deadline.set(Calendar.SECOND, 0);
         milisecDiff = deadline.getTimeInMillis() - now.getTimeInMillis() + dayDiff * 24 * 60 * 60;
         scheduleNotification(getNotification( title ) , (int) (milisecDiff/1000) );
-//        Toast.makeText(getActivity(), "Alarm Set!", Toast.LENGTH_SHORT).show();
     }
 
     private void scheduleNotification (Notification notification , int delayInt) {

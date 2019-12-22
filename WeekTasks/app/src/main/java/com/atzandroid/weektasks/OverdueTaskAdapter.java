@@ -30,7 +30,6 @@ public class OverdueTaskAdapter extends RecyclerView.Adapter<OverdueTaskAdapter.
     public void onBindViewHolder(final MyTaskViewHolder viewHolder, final int i) {
 
         viewHolder.title.setText(myTaskList.get(i).getTitle());
-//        viewHolder.body.setText(myTaskList.get(i).getText());
 
     }
 
@@ -41,13 +40,10 @@ public class OverdueTaskAdapter extends RecyclerView.Adapter<OverdueTaskAdapter.
 
     public static class MyTaskViewHolder extends RecyclerView.ViewHolder {
         TextView title;
-        TextView text;
 
         MyTaskViewHolder(View itemView) {
             super(itemView);
-//            label = itemView.findViewById(R.id.medical_service_label);
             title = itemView.findViewById(R.id.done_task_title);
-//            body = itemView.findViewById(R.id.card_body);
         }
     }
 

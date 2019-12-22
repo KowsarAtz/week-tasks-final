@@ -15,7 +15,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".AboutActivity"></activity>
-        <activity android:name=".TestActivity" />
         <activity android:name=".KeypadActivity" />
         <activity android:name=".SplashActivity">
             <intent-filter>
@@ -25,11 +24,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".MainActivity" />
-
-        <receiver
-            android:name=".MyTestAlarmReceiver"
-            android:enabled="true"
-            android:exported="true" />
 
         <receiver
             android:name=".MyNotificationPublisher"
