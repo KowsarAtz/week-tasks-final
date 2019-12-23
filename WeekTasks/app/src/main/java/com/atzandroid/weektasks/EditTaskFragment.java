@@ -131,24 +131,15 @@ public class EditTaskFragment extends Fragment {
         String alarmTimeMinute = alarmTimeTWMinute.getText().toString().trim();
         String alarmTimeHour = alarmTimeTWHour.getText().toString().trim();
         int hasAlarm = 0;
-        if (alarmTimeMinute.length() != 0 && alarmTimeHour.length() != 0){
-            hasAlarm = 1;
-        }else if((alarmTimeMinute.length() == 0 && alarmTimeHour.length() == 0)){
-            // pass
-        }else if((alarmTimeMinute.length() == 0 || alarmTimeHour.length() == 0)){
-            Toast.makeText(getActivity(), "Invalid Alarm Time! Try Again!",Toast.LENGTH_LONG).show();
-            return Boolean.FALSE;
-        }
-
-
         int alarmTimeMinuteInt = 0;
         int alarmTimeHourInt = 0;
-        if((alarmTimeMinute.length() == 0 && alarmTimeHour.length() == 0)){
-            //pass
+        if((alarmTimeMinute.length() == 0
+                && alarmTimeHour.length() == 0)){
+            //alarm not set
         }else{
             try{
-                alarmTimeMinuteInt = Integer.parseInt(alarmTimeTWMinute.getText().toString().trim());
-                alarmTimeHourInt = Integer.parseInt(alarmTimeTWHour.getText().toString().trim());
+                alarmTimeMinuteInt = Integer.parseInt(alarmTimeMinute);
+                alarmTimeHourInt = Integer.parseInt(alarmTimeHour);
                 if (alarmTimeHourInt >= 24 || alarmTimeHourInt<0 || alarmTimeMinuteInt >= 60 || alarmTimeMinuteInt<0)
                     throw new Exception();
                 hasAlarm = 1;
