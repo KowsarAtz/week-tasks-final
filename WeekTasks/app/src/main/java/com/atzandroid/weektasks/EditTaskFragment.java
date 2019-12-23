@@ -22,6 +22,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import java.util.Calendar;
+import java.util.Date;
 
 public class EditTaskFragment extends Fragment {
 
@@ -200,8 +201,9 @@ public class EditTaskFragment extends Fragment {
 
     private void scheduleNotification (Notification notification , int delayInt) {
         long delay = delayInt * 1000;
+        int new_id = (int) ((new Date().getTime() / 1000L) % Integer.MAX_VALUE);
         Intent notificationIntent = new Intent(getActivity(), MyNotificationPublisher.class) ;
-        notificationIntent.putExtra(MyNotificationPublisher. NOTIFICATION_ID , 1 ) ;
+        notificationIntent.putExtra(MyNotificationPublisher. NOTIFICATION_ID , new_id ) ;
         notificationIntent.putExtra(MyNotificationPublisher. NOTIFICATION , notification) ;
         PendingIntent pendingIntent = PendingIntent. getBroadcast ( getActivity(), 0 , notificationIntent , PendingIntent. FLAG_UPDATE_CURRENT ) ;
         long futureInMillis = SystemClock. elapsedRealtime () + delay ;
@@ -213,7 +215,7 @@ public class EditTaskFragment extends Fragment {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(getActivity(), default_notification_channel_id ) ;
         builder.setContentTitle( "Task Reminder" ) ;
         builder.setContentText(content) ;
-        builder.setSmallIcon(R.drawable. ic_launcher_foreground ) ;
+        builder.setSmallIcon(R.drawable. ic_calendar) ;
         builder.setAutoCancel( true ) ;
         builder.setChannelId(NOTIFICATION_CHANNEL_ID) ;
         builder.setSound(Settings.System.DEFAULT_NOTIFICATION_URI);
