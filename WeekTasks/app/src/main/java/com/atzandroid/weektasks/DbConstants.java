@@ -20,6 +20,7 @@ class DbConstants {
     static final String WEEK_TASKS_TABLE_HAS_ALARM = "has_alarm";
     static final String WEEK_TASKS_TABLE_DAY = "day";
     static final String WEEK_TASKS_TABLE_STATE = "state";
+    static final String WEEK_TASKS_TABLE_NOTIFICATION_ID = "notification_id";
 
     static final short TO_DO_STATE = 0;
     static final short OVER_DUE_STATE = 1;
@@ -74,6 +75,7 @@ class DbConstants {
                     WEEK_TASKS_TABLE_ALARM_TIME +" TEXT," +
                     WEEK_TASKS_TABLE_DAY +" INTEGER," +
                     WEEK_TASKS_TABLE_STATE +" INTEGER," +
+                    WEEK_TASKS_TABLE_NOTIFICATION_ID + " INTEGER," +
                     WEEK_TASKS_TABLE_HAS_ALARM +" INTEGER NOT NULL" + ");";
 
     static final String DROP_TABLES =

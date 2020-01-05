@@ -64,7 +64,6 @@ public class MainActivity extends AppCompatActivity {
         initOptionsMenu();
 
         justToTest();
-
     }
 
     private void justToTest() {

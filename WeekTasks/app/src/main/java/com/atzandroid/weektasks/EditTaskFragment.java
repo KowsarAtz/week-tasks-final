@@ -36,7 +36,6 @@ public class EditTaskFragment extends Fragment {
     private FragmentTransaction mainActivityFragmentTransaction;
 
     static int activeObjectPK = 0;
-    private int activeObjectDay;
 
     @Nullable
     @Override
@@ -85,7 +84,6 @@ public class EditTaskFragment extends Fragment {
         MyTask task = (new WeekTasksDBHelper(getActivity())).getMyTask(activeObjectPK);
         titleTW.setText(task.getTitle());
         bodyTW.setText(task.getBody());
-        activeObjectDay = task.getDay();
         String[] toDoTimeParts = task.getToDoTime().split(":");
         if(toDoTimeParts.length == 2) {
             toDoTimeTWHour.setText(String.valueOf(toDoTimeParts[0]));
@@ -155,10 +153,14 @@ public class EditTaskFragment extends Fragment {
             (new WeekTasksDBHelper(getActivity())).deleteTask(activeObjectPK);
         }
 
-        dbHelper.createTask(title, body, createTimeFormat(toDoTimeHourInt, toDoTimeMinuteInt), MainActivity.lastActiveFragmentDay, hasAlarm, alarmTime);
-        if (hasAlarm == 1)
-            setAlarm(alarmTimeHourInt, alarmTimeMinuteInt, activeObjectDay, title);
-
+        int notifID = (int) ((new Date().getTime() / 1000L) % Integer.MAX_VALUE);
+        if (hasAlarm == 1) {
+            Boolean alarmResultOk;
+            alarmResultOk = setAlarm(alarmTimeHourInt, alarmTimeMinuteInt, MainActivity.lastActiveFragmentDay, title, notifID);
+            if(!alarmResultOk)
+                return alarmResultOk;
+        }
+        dbHelper.createTask(title, body, createTimeFormat(toDoTimeHourInt, toDoTimeMinuteInt), MainActivity.lastActiveFragmentDay, hasAlarm, alarmTime, notifID);
         if(activeObjectPK == 0)
             Toast.makeText(getActivity(), "New Task Created",Toast.LENGTH_LONG).show();
         else
@@ -176,7 +178,7 @@ public class EditTaskFragment extends Fragment {
         return p1+":"+p2;
     }
 
-    private void setAlarm(int hour, int minute, int day, String title){
+    private Boolean setAlarm(int hour, int minute, int day, String title, int notifID){
         int dayDiff = day - MainActivity.today;
         long milisecDiff = 0;
         Calendar now = Calendar.getInstance();
@@ -185,16 +187,18 @@ public class EditTaskFragment extends Fragment {
         deadline.set(Calendar.MINUTE, minute);
         deadline.set(Calendar.SECOND, 0);
         milisecDiff = deadline.getTimeInMillis() - now.getTimeInMillis() + dayDiff * 24 * 60 * 60;
-        if (milisecDiff < 0)
-            return;
-        scheduleNotification(getNotification( title ) , (int) (milisecDiff/1000) );
+        if (milisecDiff < 0) {
+            Toast.makeText(getActivity(), "Cannot set alarm in the past! \nTry Again",Toast.LENGTH_LONG).show();
+            return Boolean.FALSE;
+        }
+        scheduleNotification(getNotification( title ) , (int) (milisecDiff/1000), notifID);
+        return Boolean.TRUE;
     }
 
-    private void scheduleNotification (Notification notification , int delayInt) {
+    private void scheduleNotification (Notification notification , int delayInt, int notifID) {
         long delay = delayInt * 1000;
-        int new_id = (int) ((new Date().getTime() / 1000L) % Integer.MAX_VALUE);
         Intent notificationIntent = new Intent(getActivity(), MyNotificationPublisher.class) ;
-        notificationIntent.putExtra(MyNotificationPublisher. NOTIFICATION_ID , new_id ) ;
+        notificationIntent.putExtra(MyNotificationPublisher. NOTIFICATION_ID , notifID ) ;
         notificationIntent.putExtra(MyNotificationPublisher. NOTIFICATION , notification) ;
         PendingIntent pendingIntent = PendingIntent. getBroadcast ( getActivity(), 0 , notificationIntent , PendingIntent. FLAG_UPDATE_CURRENT ) ;
         long futureInMillis = SystemClock. elapsedRealtime () + delay ;

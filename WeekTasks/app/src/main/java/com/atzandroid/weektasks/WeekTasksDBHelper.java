@@ -1,4 +1,5 @@
 package com.atzandroid.weektasks;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -30,6 +31,7 @@ import static com.atzandroid.weektasks.DbConstants.WEEK_TASKS_TABLE_ALARM_TIME;
 import static com.atzandroid.weektasks.DbConstants.WEEK_TASKS_TABLE_BODY;
 import static com.atzandroid.weektasks.DbConstants.WEEK_TASKS_TABLE_DAY;
 import static com.atzandroid.weektasks.DbConstants.WEEK_TASKS_TABLE_HAS_ALARM;
+import static com.atzandroid.weektasks.DbConstants.WEEK_TASKS_TABLE_NOTIFICATION_ID;
 import static com.atzandroid.weektasks.DbConstants.WEEK_TASKS_TABLE_PK;
 import static com.atzandroid.weektasks.DbConstants.WEEK_TASKS_TABLE_STATE;
 import static com.atzandroid.weektasks.DbConstants.WEEK_TASKS_TABLE_TITLE;
@@ -37,8 +39,11 @@ import static com.atzandroid.weektasks.DbConstants.WEEK_TASKS_TABLE_TO_DO_TIME;
 
 public class WeekTasksDBHelper extends SQLiteOpenHelper {
 
+    private Context dbContext;
+
     public WeekTasksDBHelper(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
+        dbContext = context;
     }
 
     @Override
@@ -127,7 +132,7 @@ public class WeekTasksDBHelper extends SQLiteOpenHelper {
             db.close();
     }
 
-    public void createTask(String title, String body, String toDoTime, int day, int hasAlarm, String alarmTime){
+    public void createTask(String title, String body, String toDoTime, int day, int hasAlarm, String alarmTime, int notifID){
         SQLiteDatabase db = getWritableDatabase();
         db.execSQL("INSERT INTO " + WEEK_TASKS_TABLE
                 + " (" + WEEK_TASKS_TABLE_TITLE
@@ -135,11 +140,12 @@ public class WeekTasksDBHelper extends SQLiteOpenHelper {
                 + " , " + WEEK_TASKS_TABLE_ALARM_TIME
                 + " , " + WEEK_TASKS_TABLE_DAY
                 + " , " + WEEK_TASKS_TABLE_STATE
+                + " , " + WEEK_TASKS_TABLE_NOTIFICATION_ID
                 + " , " + WEEK_TASKS_TABLE_HAS_ALARM +") "
                 + "VALUES " + "('" + title + "' , '" + body
                 + "' , '" + toDoTime
                 + "' , '" + alarmTime + "' , "
-                + day + " , " + TO_DO_STATE + " , " + hasAlarm + ")");
+                + day + " , " + TO_DO_STATE + " , " + notifID + " , " + hasAlarm + ")");
         db.close();
         Log.i(DB_NAME, "new task created . . .");
     }
@@ -163,9 +169,15 @@ public class WeekTasksDBHelper extends SQLiteOpenHelper {
 
     public void deleteTask(int pk){
         SQLiteDatabase db = getWritableDatabase();
+        int temp;
+        Cursor cursor = db.rawQuery("SELECT "+ WEEK_TASKS_TABLE_NOTIFICATION_ID +" FROM "+ WEEK_TASKS_TABLE +" " +
+                "WHERE "+ WEEK_TASKS_TABLE_PK +" = "+pk, null);
+        cursor.moveToFirst();
+        temp = cursor.getInt(0);
+        ((NotificationManager)dbContext.getSystemService(Context.NOTIFICATION_SERVICE)).cancel(temp);
         db.execSQL("DELETE FROM "+ WEEK_TASKS_TABLE +" WHERE "+ WEEK_TASKS_TABLE_PK +"="+pk);
-        if(db.isOpen())
-            db.close();
+        db.close();
+        cursor.close();
     }
 
     public MyTask getMyTask (int pk){
