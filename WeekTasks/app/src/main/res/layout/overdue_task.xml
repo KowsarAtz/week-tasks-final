@@ -10,14 +10,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="left"
-        android:background="@drawable/done_task_background"
+        android:background="@drawable/overdue_task_background"
         android:layout_marginRight="20dp">
 
         <TextView
             android:id="@+id/done_task_title"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="Done Task"
+            android:text="Overdue Task"
             android:gravity="center_vertical"
             android:textColor="@color/white"
             android:fontFamily="@font/londrina_solid_regular"
@@ -32,20 +32,21 @@
         android:layout_height="match_parent"
         android:layout_gravity="right"
         android:layout_marginRight="65dp"
-        android:background="@drawable/done_task_back_tick2"/>
+        android:background="@drawable/overdue_task_back_tick2"/>
 
     <FrameLayout
         android:layout_width="80dp"
         android:layout_height="match_parent"
         android:layout_gravity="right"
-        android:background="@drawable/done_task_back_tick">
+        android:background="@drawable/overdue_task_back_tick">
 
         <ImageView
             android:layout_width="40dp"
             android:layout_height="match_parent"
-            app:srcCompat="@drawable/ic_unchecked"
+            app:srcCompat="@drawable/ic_unchecked2"
             android:layout_marginRight="25dp"
             android:layout_gravity="right"
+            android:padding="4dp"
             />
 
     </FrameLayout>

@@ -18,4 +18,8 @@
     <color name="black">#000000</color>
     <color name="red_warning">#F11C1C</color>
     <color name="green_approved">#24C528</color>
+
+    <color name="overdue_dark">#7E0A08</color>
+    <color name="overdue_light">#D82727</color>
+
 </resources>
