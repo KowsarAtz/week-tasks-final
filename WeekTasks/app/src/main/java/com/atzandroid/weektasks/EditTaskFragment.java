@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.provider.Settings;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -186,7 +187,7 @@ public class EditTaskFragment extends Fragment {
         deadline.set(Calendar.HOUR_OF_DAY, hour);
         deadline.set(Calendar.MINUTE, minute);
         deadline.set(Calendar.SECOND, 0);
-        milisecDiff = deadline.getTimeInMillis() - now.getTimeInMillis() + dayDiff * 24 * 60 * 60;
+        milisecDiff = deadline.getTimeInMillis() - now.getTimeInMillis() + dayDiff * 24 * 60 * 60 * 1000;
         if (milisecDiff < 0) {
             Toast.makeText(getActivity(), "Cannot set alarm in the past! \nTry Again",Toast.LENGTH_LONG).show();
             return Boolean.FALSE;
