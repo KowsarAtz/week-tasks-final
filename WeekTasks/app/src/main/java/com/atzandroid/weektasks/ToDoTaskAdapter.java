@@ -103,39 +103,40 @@ public class ToDoTaskAdapter extends RecyclerView.Adapter<ToDoTaskAdapter.MyTask
         final ObjectAnimator swipeRightAnimTickTask = ObjectAnimator.ofFloat(viewHolder.toDoTaskLayer, "translationX", 170f)
                 .setDuration(400);
         swipeRightAnimTickTask.addListener(new Animator.AnimatorListener() {
-            @Override
-            public void onAnimationStart(Animator animation) {
-            }
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                ObjectAnimator obj = ObjectAnimator.ofFloat(viewHolder.toDoTaskLayer, "translationX", 0f)
-                        .setDuration(400);
-                obj.addListener(new Animator.AnimatorListener() {
-                    @Override
-                    public void onAnimationStart(Animator animation) {
-                    }
-                    @Override
-                    public void onAnimationEnd(Animator animation) {
-                        (new WeekTasksDBHelper(mainActivity)).updateTaskState(viewHolder.pk, DONE_STATE);
-                        Toast.makeText(mainActivity, "Good Job!", Toast.LENGTH_LONG).show();
-                        mainActivity.updateFragment(MainActivity.lastActiveFragmentDay);
-                    }
-                    @Override
-                    public void onAnimationCancel(Animator animation) {
-                    }
-                    @Override
-                    public void onAnimationRepeat(Animator animation) {
-                    }
-                });
-                obj.start();
-            }
-            @Override
-            public void onAnimationCancel(Animator animation) {
-            }
-            @Override
-            public void onAnimationRepeat(Animator animation) {
-            }
-        });
+                @Override
+                public void onAnimationStart(Animator animation) {
+                }
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    ObjectAnimator obj = ObjectAnimator.ofFloat(viewHolder.toDoTaskLayer, "translationX", 0f)
+                            .setDuration(400);
+                    obj.addListener(new Animator.AnimatorListener() {
+                        @Override
+                        public void onAnimationStart(Animator animation) {
+                        }
+                        @Override
+                        public void onAnimationEnd(Animator animation) {
+                            (new WeekTasksDBHelper(mainActivity)).updateTaskState(viewHolder.pk, DONE_STATE);
+                            Toast.makeText(mainActivity, "Good Job!", Toast.LENGTH_LONG).show();
+                            mainActivity.updateFragment(MainActivity.lastActiveFragmentDay);
+                        }
+                        @Override
+                        public void onAnimationCancel(Animator animation) {
+                        }
+                        @Override
+                        public void onAnimationRepeat(Animator animation) {
+                        }
+                    });
+                    obj.start();
+                }
+                @Override
+                public void onAnimationCancel(Animator animation) {
+                }
+                @Override
+                public void onAnimationRepeat(Animator animation) {
+                }
+            });
+
 
         OnSwipeTouchListener onSwipeTouchListener = new OnSwipeTouchListener(viewHolder.toDoTaskLayer.getContext()) {
             @Override
@@ -148,7 +149,7 @@ public class ToDoTaskAdapter extends RecyclerView.Adapter<ToDoTaskAdapter.MyTask
             public void onSwipeRight(){
                 if (viewHolder.swiped)
                     swipeRightAnim.start();
-                else{
+                else if (MainActivity.today == MainActivity.lastActiveFragmentDay){
                     swipeRightAnimTickTask.start();
                 }
             }
