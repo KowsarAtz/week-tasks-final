@@ -13,7 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 
 public class CircularProgressBar extends View {
-    Paint mPaintProgress, mPaintBackground;
+    Paint mPaintProgress, mPaintBackground, mPaintProgress2;
     Context context;
     float strokeWidth, fillWidth;
     float sweepAngle;
@@ -54,6 +54,15 @@ public class CircularProgressBar extends View {
         mPaintProgress.setStrokeCap(Paint.Cap.ROUND);
         mPaintProgress.setColor(context.getResources().getColor(R.color.green_approved));
 
+        mPaintProgress2 = new Paint();
+        mPaintProgress2.setAntiAlias(true);
+        mPaintProgress2.setDither(true);
+        mPaintProgress2.setStyle(Paint.Style.STROKE);
+        mPaintProgress2.setStrokeWidth((float) (fillWidth*0.7));
+        mPaintProgress2.setStrokeCap(Paint.Cap.ROUND);
+        mPaintProgress2.setColor(context.getResources().getColor(R.color.green_approved));
+
+
         mPaintBackground = new Paint();
         mPaintBackground.setAntiAlias(true);
         mPaintBackground.setDither(true);
@@ -74,9 +83,9 @@ public class CircularProgressBar extends View {
         mPaintProgress.setColor(context.getResources().getColor(R.color.tasky_blue));
         canvas.drawArc(strokeWidth+temp, strokeWidth+temp, getWidth()-strokeWidth-temp, getHeight()-strokeWidth-temp
                 , 0, 360, false, mPaintProgress);
-        mPaintProgress.setColor(context.getResources().getColor(R.color.tasky_dark_blue));
+        mPaintProgress2.setColor(context.getResources().getColor(R.color.tasky_dark_blue));
         canvas.drawArc(strokeWidth+temp, strokeWidth+temp, getWidth()-strokeWidth-temp, getHeight()-strokeWidth-temp
-                , 0, sweepAngle, false, mPaintProgress);
+                , 0, sweepAngle, false, mPaintProgress2);
         if (finished) {
             mPaintProgress.setColor(context.getResources().getColor(R.color.green_approved));
             canvas.drawArc(strokeWidth + temp, strokeWidth + temp, getWidth() - strokeWidth - temp, getHeight() - strokeWidth - temp

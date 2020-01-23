@@ -90,6 +90,7 @@ public class LoginActivity extends AppCompatActivity {
                     }
                     circularProgressBar.setFinished();
                     circularProgressBar.postInvalidate();
+                    loggedInMsgTw.setTextColor(LoginActivity.this.getResources().getColor(R.color.green_approved));
                     Thread.sleep(500);
                 } catch (Exception e) {
                     e.printStackTrace();
