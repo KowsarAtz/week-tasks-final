@@ -6,7 +6,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.logging.FileHandler;
 
 import static com.atzandroid.weektasks.DbConstants.CREATE_TABLE_PARAMS;
 import static com.atzandroid.weektasks.DbConstants.CREATE_TABLE_STRING_PARAMS;
@@ -154,6 +156,7 @@ public class WeekTasksDBHelper extends SQLiteOpenHelper {
     }
 
     public void deleteAllTask(){
+        //to be completed . . . (remove attached photos)
         SQLiteDatabase db = getWritableDatabase();
         db.execSQL("DELETE FROM "+ WEEK_TASKS_TABLE);
         if(db.isOpen())
@@ -199,6 +202,7 @@ public class WeekTasksDBHelper extends SQLiteOpenHelper {
 
     public void deleteTask(int pk){
         SQLiteDatabase db = getWritableDatabase();
+        //to be completed . . . (remove attached photo)
         int temp;
         Cursor cursor = db.rawQuery("SELECT "+ WEEK_TASKS_TABLE_NOTIFICATION_ID +" FROM "+ WEEK_TASKS_TABLE +" " +
                 "WHERE "+ WEEK_TASKS_TABLE_PK +" = "+pk, null);
@@ -219,6 +223,17 @@ public class WeekTasksDBHelper extends SQLiteOpenHelper {
         if(db.isOpen()) db.close();
         cursor.close();
         return task;
+    }
+
+    public String getMyTaskImagePath (int pk){
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM "+ WEEK_TASKS_TABLE +" WHERE "+ WEEK_TASKS_TABLE_PK +"="+pk, null);
+        String path = "";
+        if(cursor.moveToNext())
+            path = cursor.getString(cursor.getColumnIndex(WEEK_TASKS_TABLE_PICTURE_PATH));
+        if(db.isOpen()) db.close();
+        cursor.close();
+        return path;
     }
 
     public void updateTaskState(int pk, int newNewState){

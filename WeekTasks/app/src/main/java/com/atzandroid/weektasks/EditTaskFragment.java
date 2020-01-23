@@ -46,12 +46,14 @@ public class EditTaskFragment extends Fragment {
 
     static int activeObjectPK = 0;
     static String picturePath = "";
+    static View globalView;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.edit_task, container, false);
         picturePath = "";
+        globalView = view;
 
         titleTW = view.findViewById(R.id.taskTitleTextView);
         bodyTW = view.findViewById(R.id.taskBodyTextView);
@@ -97,8 +99,12 @@ public class EditTaskFragment extends Fragment {
     }
 
     public static void updateImage(Activity activity){
-        File file = new File(picturePath);
-        taskeImage.setImageBitmap(BitmapFactory.decodeFile(file.getAbsolutePath()));
+        if (!picturePath.equals("")) {
+            File file = new File(picturePath);
+            taskeImage.setImageBitmap(BitmapFactory.decodeFile(file.getAbsolutePath()));
+        }else{
+            taskeImage.setImageDrawable(globalView.getResources().getDrawable(R.drawable.camera_logo));
+        }
         if (activity != null)
             activity.finish();
     }

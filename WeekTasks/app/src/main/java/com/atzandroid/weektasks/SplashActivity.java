@@ -21,10 +21,10 @@ public class SplashActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        validateToken(SplashActivity.this);
+        validateToken(SplashActivity.this, false);
     }
 
-    public static void validateToken(Activity activity){
+    public static void validateToken(Activity activity, boolean isLoginActivity){
         String token = new WeekTasksDBHelper(activity).getLastToken();
         if(token.equals("")) {
             activity.startActivity(new Intent(activity, LoginActivity.class));
@@ -46,7 +46,13 @@ public class SplashActivity extends AppCompatActivity {
                         bundle.putString("username", String.valueOf(result.get("username")));
                         Intent intent = new Intent(activity, MainActivity.class);
                         intent.putExtras(bundle);
-                        startAnimThread(intent, activity);
+                        if (isLoginActivity)
+                            ((LoginActivity) activity).startAnimThread(intent);
+                        else{
+                            activity.startActivity(intent);
+                            activity.finish();
+                        }
+
                     } else {
                         new WeekTasksDBHelper(activity).updateLastToken("");
 //                        Toast.makeText(activity, "Token has expired! Login Again", Toast.LENGTH_LONG).show();
@@ -55,22 +61,5 @@ public class SplashActivity extends AppCompatActivity {
                     }
                 }
             });
-    }
-
-    public static void startAnimThread(Intent intent, Activity activity) {
-        new Thread(new Runnable() {
-            public void run() {
-                for (int i=1; i<=5; i+=1) {
-                    try {
-                        Thread.sleep(100);
-                        Toast.makeText(activity, "second"+i, Toast.LENGTH_SHORT).show();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-                activity.startActivity(intent);
-                activity.finish();
-            }
-        }).start();
     }
 }

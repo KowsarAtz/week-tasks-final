@@ -125,6 +125,18 @@ public class CameraActivity extends AppCompatActivity {
             }
         });
 
+        Button removeBtn = findViewById(R.id.remove_photo_btn);
+        removeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!EditTaskFragment.picturePath.equals(""))
+                    if((new File(EditTaskFragment.picturePath)).delete())
+                        Toast.makeText(CameraActivity.this, "Task photo Removed", Toast.LENGTH_SHORT).show();
+                EditTaskFragment.picturePath = "";
+                EditTaskFragment.updateImage(CameraActivity.this);
+            }
+        });
+
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -158,6 +170,9 @@ public class CameraActivity extends AppCompatActivity {
 
             String path = this.getFilesDir()+"/"+UUID.randomUUID().toString() + ".jpg";
             file = new File(path);
+            if (!EditTaskFragment.picturePath.equals(""))
+                if((new File(EditTaskFragment.picturePath)).delete())
+                    Toast.makeText(CameraActivity.this, "Last taken photo Removed", Toast.LENGTH_SHORT).show();
             EditTaskFragment.picturePath = path;
             ImageReader.OnImageAvailableListener readerListener = new ImageReader.OnImageAvailableListener() {
                 @Override
@@ -196,7 +211,7 @@ public class CameraActivity extends AppCompatActivity {
                 @Override
                 public void onCaptureCompleted(@NonNull CameraCaptureSession session, @NonNull CaptureRequest request, @NonNull TotalCaptureResult result) {
                     super.onCaptureCompleted(session, request, result);
-                    Toast.makeText(CameraActivity.this, "Saved "+file, Toast.LENGTH_LONG).show();
+                    Toast.makeText(CameraActivity.this, "New Pictured Temporarily Saved", Toast.LENGTH_LONG).show();
                     createCameraPreview();
                 }
             };

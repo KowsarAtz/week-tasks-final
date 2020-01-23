@@ -71,19 +71,19 @@
                 app:fontFamily="@font/londrina_solid_regular" />
 
             <LinearLayout
-                android:layout_marginRight="30dp"
                 android:layout_marginTop="30dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="150dp"
                 android:orientation="horizontal">
 
 
                 <LinearLayout
+                    android:paddingVertical="5dp"
                     android:layout_width="0dp"
                     android:layout_weight="1"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:orientation="vertical"
-                    android:gravity="center">
+                    android:gravity="left">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -92,7 +92,7 @@
                         android:orientation="vertical">
 
                         <TextView
-                            android:layout_gravity="center"
+                            android:layout_gravity="left"
                             android:layout_width="wrap_content"
                             android:layout_height="0dp"
                             android:layout_weight="1"
@@ -106,7 +106,7 @@
 
                         <LinearLayout
                             android:layout_width="100dp"
-                            android:layout_gravity="center"
+                            android:layout_gravity="left"
                             android:layout_height="0dp"
                             android:orientation="horizontal"
                             android:layout_weight="1">
@@ -158,7 +158,7 @@
                         android:orientation="vertical">
 
                         <TextView
-                            android:layout_gravity="center"
+                            android:layout_gravity="left"
                             android:layout_width="wrap_content"
                             android:layout_height="0dp"
                             android:layout_weight="1"
@@ -172,7 +172,7 @@
 
                         <LinearLayout
                             android:layout_width="100dp"
-                            android:layout_gravity="center"
+                            android:layout_gravity="left"
                             android:layout_height="0dp"
                             android:orientation="horizontal"
                             android:layout_weight="1">
@@ -219,18 +219,19 @@
                 </LinearLayout>
 
                 <com.makeramen.roundedimageview.RoundedImageView
-                    android:layout_weight="0.7"
+                    android:layout_weight="1"
                     android:layout_height="match_parent"
                     android:layout_width="0dp"
                     xmlns:app="http://schemas.android.com/apk/res-auto"
                     android:id="@+id/task_imageView"
                     android:src="@drawable/camera_logo"
                     android:scaleType="centerCrop"
-                    app:riv_corner_radius="30dip"
-                    app:riv_border_width="2dip"
-                    app:riv_border_color="#333333"
+                    app:riv_corner_radius="10dip"
+                    app:riv_border_width="3dip"
+                    app:riv_border_color="@color/tasky_blue"
                     app:riv_mutate_background="true"
-                    app:riv_oval="false" />
+                    app:riv_oval="false"
+                    android:layout_gravity="right"/>
 
             </LinearLayout>
 

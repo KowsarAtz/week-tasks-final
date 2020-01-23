@@ -28,30 +28,55 @@
         android:layout_weight="1"
         />
 
-    <Button
-        android:layout_marginTop="20dp"
-        android:id="@+id/capture_btn"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        style="@style/Widget.AppCompat.Button.Borderless"
-        android:background="@drawable/edit_task_btn_background"
-        android:text="CAPTURE"
-        app:fontFamily="@font/londrina_solid_regular"
-        android:textColor="@color/white"
-        android:textSize="25dp"
-        />
+        android:orientation="horizontal">
 
-    <Button
-        android:layout_marginTop="20dp"
-        android:id="@+id/done_capture_btn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        style="@style/Widget.AppCompat.Button.Borderless"
-        android:background="@drawable/edit_task_btn_background"
-        android:text="DONE"
-        app:fontFamily="@font/londrina_solid_regular"
-        android:textColor="@color/white"
-        android:textSize="25dp"
-        />
+        <Button
+            android:layout_marginTop="20dp"
+            android:id="@+id/capture_btn"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:background="@drawable/edit_task_btn_background"
+            android:text="CAPTURE"
+            app:fontFamily="@font/londrina_solid_regular"
+            android:textColor="@color/white"
+            android:textSize="25dp"
+            android:layout_marginRight="10dp"
+            />
+
+        <Button
+            android:layout_marginTop="20dp"
+            android:id="@+id/done_capture_btn"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:background="@drawable/edit_task_btn_background"
+            android:text="DONE"
+            app:fontFamily="@font/londrina_solid_regular"
+            android:textColor="@color/white"
+            android:textSize="25dp"
+            android:layout_marginRight="10dp"
+            />
+
+        <Button
+            android:layout_marginTop="20dp"
+            android:id="@+id/remove_photo_btn"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:background="@drawable/edit_task_btn_background"
+            android:text="REMOVE"
+            app:fontFamily="@font/londrina_solid_regular"
+            android:textColor="@color/white"
+            android:textSize="25dp"
+            />
+
+    </LinearLayout>
 
 </LinearLayout>
