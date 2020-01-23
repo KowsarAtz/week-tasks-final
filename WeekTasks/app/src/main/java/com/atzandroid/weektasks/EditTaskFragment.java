@@ -1,10 +1,13 @@
 package com.atzandroid.weektasks;
 
+import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.provider.Settings;
@@ -18,10 +21,14 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.makeramen.roundedimageview.RoundedImageView;
+
+import java.io.File;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -35,13 +42,16 @@ public class EditTaskFragment extends Fragment {
             toDoTimeTWMinute, alarmTimeTWHour, alarmTimeTWMinute;
     private Button saveTaskBtn, cancelSaveTaskBtn;
     private FragmentTransaction mainActivityFragmentTransaction;
+    static RoundedImageView taskeImage;
 
     static int activeObjectPK = 0;
+    static String picturePath = "";
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.edit_task, container, false);
+        picturePath = "";
 
         titleTW = view.findViewById(R.id.taskTitleTextView);
         bodyTW = view.findViewById(R.id.taskBodyTextView);
@@ -54,6 +64,16 @@ public class EditTaskFragment extends Fragment {
         cancelSaveTaskBtn = view.findViewById(R.id.edit_task_cancel_btn);
         editTaskDayNameTW = view.findViewById(R.id.edit_task_day_name);
 
+        taskeImage = view.findViewById(R.id.task_imageView);
+        taskeImage.setOnLongClickListener(new View.OnLongClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+            @Override
+            public boolean onLongClick(View v) {
+                CameraActivity.title = "Task Title: " + titleTW.getText().toString().trim();
+                startActivity(new Intent(getContext(), CameraActivity.class));
+                return false;
+            }
+        });
 
         mainActivityFragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
 
@@ -72,10 +92,15 @@ public class EditTaskFragment extends Fragment {
                 getBackToPrevFragment();
             }
         });
-
         setContents();
-
         return view;
+    }
+
+    public static void updateImage(Activity activity){
+        File file = new File(picturePath);
+        taskeImage.setImageBitmap(BitmapFactory.decodeFile(file.getAbsolutePath()));
+        if (activity != null)
+            activity.finish();
     }
 
     private void setContents(){
@@ -95,6 +120,8 @@ public class EditTaskFragment extends Fragment {
             alarmTimeTWHour.setText(String.valueOf(alarmTimeParts[0]));
             alarmTimeTWMinute.setText(String.valueOf(alarmTimeParts[1]));
         }
+        picturePath = task.getPicturePath();
+        updateImage(null);
     }
 
     private void getBackToPrevFragment(){
@@ -161,7 +188,7 @@ public class EditTaskFragment extends Fragment {
             if(!alarmResultOk)
                 return alarmResultOk;
         }
-        dbHelper.createTask(title, body, createTimeFormat(toDoTimeHourInt, toDoTimeMinuteInt), MainActivity.lastActiveFragmentDay, hasAlarm, alarmTime, notifID);
+        dbHelper.createTask(title, body, createTimeFormat(toDoTimeHourInt, toDoTimeMinuteInt), MainActivity.lastActiveFragmentDay, hasAlarm, alarmTime, notifID, picturePath);
         if(activeObjectPK == 0)
             Toast.makeText(getActivity(), "New Task Created",Toast.LENGTH_LONG).show();
         else

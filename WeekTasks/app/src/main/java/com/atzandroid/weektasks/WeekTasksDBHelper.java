@@ -38,6 +38,7 @@ import static com.atzandroid.weektasks.DbConstants.WEEK_TASKS_TABLE_BODY;
 import static com.atzandroid.weektasks.DbConstants.WEEK_TASKS_TABLE_DAY;
 import static com.atzandroid.weektasks.DbConstants.WEEK_TASKS_TABLE_HAS_ALARM;
 import static com.atzandroid.weektasks.DbConstants.WEEK_TASKS_TABLE_NOTIFICATION_ID;
+import static com.atzandroid.weektasks.DbConstants.WEEK_TASKS_TABLE_PICTURE_PATH;
 import static com.atzandroid.weektasks.DbConstants.WEEK_TASKS_TABLE_PK;
 import static com.atzandroid.weektasks.DbConstants.WEEK_TASKS_TABLE_STATE;
 import static com.atzandroid.weektasks.DbConstants.WEEK_TASKS_TABLE_TITLE;
@@ -159,17 +160,19 @@ public class WeekTasksDBHelper extends SQLiteOpenHelper {
             db.close();
     }
 
-    public void createTask(String title, String body, String toDoTime, int day, int hasAlarm, String alarmTime, int notifID){
+    public void createTask(String title, String body, String toDoTime, int day, int hasAlarm, String alarmTime, int notifID, String picturePath){
         SQLiteDatabase db = getWritableDatabase();
         db.execSQL("INSERT INTO " + WEEK_TASKS_TABLE
                 + " (" + WEEK_TASKS_TABLE_TITLE
-                + " , " + WEEK_TASKS_TABLE_BODY + " , " + WEEK_TASKS_TABLE_TO_DO_TIME
+                + " , " + WEEK_TASKS_TABLE_BODY
+                + " , " + WEEK_TASKS_TABLE_PICTURE_PATH
+                + " , " + WEEK_TASKS_TABLE_TO_DO_TIME
                 + " , " + WEEK_TASKS_TABLE_ALARM_TIME
                 + " , " + WEEK_TASKS_TABLE_DAY
                 + " , " + WEEK_TASKS_TABLE_STATE
                 + " , " + WEEK_TASKS_TABLE_NOTIFICATION_ID
                 + " , " + WEEK_TASKS_TABLE_HAS_ALARM +") "
-                + "VALUES " + "('" + title + "' , '" + body
+                + "VALUES " + "('" + title + "' , '" + body + "' , '" + picturePath
                 + "' , '" + toDoTime
                 + "' , '" + alarmTime + "' , "
                 + day + " , " + TO_DO_STATE + " , " + notifID + " , " + hasAlarm + ")");

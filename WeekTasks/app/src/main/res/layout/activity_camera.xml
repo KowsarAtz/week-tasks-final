@@ -41,4 +41,17 @@
         android:textSize="25dp"
         />
 
+    <Button
+        android:layout_marginTop="20dp"
+        android:id="@+id/done_capture_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:background="@drawable/edit_task_btn_background"
+        android:text="DONE"
+        app:fontFamily="@font/londrina_solid_regular"
+        android:textColor="@color/white"
+        android:textSize="25dp"
+        />
+
 </LinearLayout>

@@ -6,22 +6,24 @@ import static com.atzandroid.weektasks.DbConstants.WEEK_TASKS_TABLE_ALARM_TIME;
 import static com.atzandroid.weektasks.DbConstants.WEEK_TASKS_TABLE_BODY;
 import static com.atzandroid.weektasks.DbConstants.WEEK_TASKS_TABLE_DAY;
 import static com.atzandroid.weektasks.DbConstants.WEEK_TASKS_TABLE_HAS_ALARM;
+import static com.atzandroid.weektasks.DbConstants.WEEK_TASKS_TABLE_PICTURE_PATH;
 import static com.atzandroid.weektasks.DbConstants.WEEK_TASKS_TABLE_PK;
 import static com.atzandroid.weektasks.DbConstants.WEEK_TASKS_TABLE_TITLE;
 import static com.atzandroid.weektasks.DbConstants.WEEK_TASKS_TABLE_TO_DO_TIME;
 
 public class MyTask {
-    String title, body, toDoTime, alarmTime;
+    String title, body, toDoTime, alarmTime, picturePath;
     int pk, day, has_alarm;
 
     public MyTask(Cursor cursor) {
         this.title = cursor.getString(cursor.getColumnIndex(WEEK_TASKS_TABLE_TITLE));
         this.body = cursor.getString(cursor.getColumnIndex(WEEK_TASKS_TABLE_BODY));
+        this.picturePath = cursor.getString(cursor.getColumnIndex(WEEK_TASKS_TABLE_PICTURE_PATH));
         this.toDoTime = cursor.getString(cursor.getColumnIndex(WEEK_TASKS_TABLE_TO_DO_TIME));
         this.alarmTime = cursor.getString(cursor.getColumnIndex(WEEK_TASKS_TABLE_ALARM_TIME));
         this.pk = cursor.getInt(cursor.getColumnIndex(WEEK_TASKS_TABLE_PK));
         this.day = cursor.getInt(cursor.getColumnIndex(WEEK_TASKS_TABLE_DAY));
-        this.has_alarm = cursor.getInt(cursor.getColumnIndex(WEEK_TASKS_TABLE_HAS_ALARM));;
+        this.has_alarm = cursor.getInt(cursor.getColumnIndex(WEEK_TASKS_TABLE_HAS_ALARM));
     }
 
     public String getTitle() {
@@ -30,6 +32,10 @@ public class MyTask {
 
     public String getBody() {
         return body;
+    }
+
+    public String getPicturePath() {
+        return picturePath;
     }
 
     public String getToDoTime() {

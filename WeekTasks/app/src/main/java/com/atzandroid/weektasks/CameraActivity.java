@@ -8,6 +8,7 @@ import androidx.core.app.ActivityCompat;
 import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.graphics.BitmapFactory;
 import android.graphics.ImageFormat;
 import android.graphics.SurfaceTexture;
 import android.hardware.camera2.CameraAccessException;
@@ -47,6 +48,8 @@ import java.util.UUID;
 
 @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
 public class CameraActivity extends AppCompatActivity {
+
+    static String title;
 
     private TextView captureTitle;
     private TextureView captureTexture;
@@ -101,11 +104,24 @@ public class CameraActivity extends AppCompatActivity {
         captureTitle = findViewById(R.id.capture_title_tw);
         captureTexture = findViewById(R.id.camera_texture_view);
 
+        captureTitle.setText(title);
+
         captureTexture.setSurfaceTextureListener(textureListener);
         captureButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 capture();
+            }
+        });
+
+        Button doneBtn = findViewById(R.id.done_capture_btn);
+        doneBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (EditTaskFragment.picturePath.equals(""))
+                    Toast.makeText(CameraActivity.this, "No Picture Captured yet!", Toast.LENGTH_LONG).show();
+                else
+                    EditTaskFragment.updateImage(CameraActivity.this);
             }
         });
 
@@ -140,7 +156,9 @@ public class CameraActivity extends AppCompatActivity {
             int rotation = getWindowManager().getDefaultDisplay().getRotation();
             captureBuilder.set(CaptureRequest.JPEG_ORIENTATION, ORIENTATIONS.get(rotation));
 
-            file = new File(this.getFilesDir()+"/"+UUID.randomUUID().toString() + ".jpg");
+            String path = this.getFilesDir()+"/"+UUID.randomUUID().toString() + ".jpg";
+            file = new File(path);
+            EditTaskFragment.picturePath = path;
             ImageReader.OnImageAvailableListener readerListener = new ImageReader.OnImageAvailableListener() {
                 @Override
                 public void onImageAvailable(ImageReader reader) {

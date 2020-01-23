@@ -21,10 +21,6 @@ public class SplashActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        startActivity(new Intent(this, CameraActivity.class));
-        finish();
-
         validateToken(SplashActivity.this);
     }
 
@@ -53,7 +49,7 @@ public class SplashActivity extends AppCompatActivity {
                         startAnimThread(intent, activity);
                     } else {
                         new WeekTasksDBHelper(activity).updateLastToken("");
-                        Toast.makeText(activity, "Token has expired! Login Again", Toast.LENGTH_LONG).show();
+//                        Toast.makeText(activity, "Token has expired! Login Again", Toast.LENGTH_LONG).show();
                         activity.startActivity(new Intent(activity, LoginActivity.class));
                         activity.finish();
                     }
