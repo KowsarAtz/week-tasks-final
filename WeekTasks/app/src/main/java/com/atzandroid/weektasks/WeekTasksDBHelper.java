@@ -9,6 +9,7 @@ import android.util.Log;
 import java.util.ArrayList;
 
 import static com.atzandroid.weektasks.DbConstants.CREATE_TABLE_PARAMS;
+import static com.atzandroid.weektasks.DbConstants.CREATE_TABLE_STRING_PARAMS;
 import static com.atzandroid.weektasks.DbConstants.CREATE_TABLE_WEEK_TASKS;
 import static com.atzandroid.weektasks.DbConstants.DB_NAME;
 import static com.atzandroid.weektasks.DbConstants.DB_VERSION;
@@ -17,7 +18,9 @@ import static com.atzandroid.weektasks.DbConstants.INIT_TABLE_PARAMS_1;
 import static com.atzandroid.weektasks.DbConstants.INIT_TABLE_PARAMS_2;
 import static com.atzandroid.weektasks.DbConstants.INIT_TABLE_PARAMS_3;
 import static com.atzandroid.weektasks.DbConstants.INIT_TABLE_PARAMS_4;
+import static com.atzandroid.weektasks.DbConstants.INIT_TABLE_STRING_PARAMS_1;
 import static com.atzandroid.weektasks.DbConstants.LAST_DAY_VISTIED;
+import static com.atzandroid.weektasks.DbConstants.LAST_TOKEN;
 import static com.atzandroid.weektasks.DbConstants.NOT_SET;
 import static com.atzandroid.weektasks.DbConstants.OVER_DUE_STATE;
 import static com.atzandroid.weektasks.DbConstants.PARAM_TABLE;
@@ -25,6 +28,9 @@ import static com.atzandroid.weektasks.DbConstants.PARAM_TABLE_ITEM_PK;
 import static com.atzandroid.weektasks.DbConstants.PARAM_TABLE_ITEM_VALUE;
 import static com.atzandroid.weektasks.DbConstants.PASSWORD_HASH;
 import static com.atzandroid.weektasks.DbConstants.PASS_PROTECTED_STATUS;
+import static com.atzandroid.weektasks.DbConstants.STRING_PARAM_TABLE;
+import static com.atzandroid.weektasks.DbConstants.STRING_PARAM_TABLE_ITEM_PK;
+import static com.atzandroid.weektasks.DbConstants.STRING_PARAM_TABLE_ITEM_VALUE;
 import static com.atzandroid.weektasks.DbConstants.TO_DO_STATE;
 import static com.atzandroid.weektasks.DbConstants.WEEK_TASKS_TABLE;
 import static com.atzandroid.weektasks.DbConstants.WEEK_TASKS_TABLE_ALARM_TIME;
@@ -53,6 +59,8 @@ public class WeekTasksDBHelper extends SQLiteOpenHelper {
         db.execSQL(INIT_TABLE_PARAMS_2);
         db.execSQL(INIT_TABLE_PARAMS_3);
         db.execSQL(INIT_TABLE_PARAMS_4);
+        db.execSQL(CREATE_TABLE_STRING_PARAMS);
+        db.execSQL(INIT_TABLE_STRING_PARAMS_1);
         Log.i(DB_NAME, PARAM_TABLE + " table created and initialized.");
         db.execSQL(CREATE_TABLE_WEEK_TASKS);
         Log.i(DB_NAME, WEEK_TASKS_TABLE + " table created and initialized.");
@@ -63,6 +71,25 @@ public class WeekTasksDBHelper extends SQLiteOpenHelper {
         db.execSQL(DROP_TABLES);
         Log.i(DB_NAME, "tables dropped, calling on create . . .");
         onCreate(db);
+    }
+
+    public String getLastToken(){
+        String temp;
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT "+ STRING_PARAM_TABLE_ITEM_VALUE +" FROM "+ STRING_PARAM_TABLE +" " +
+                "WHERE "+ STRING_PARAM_TABLE_ITEM_PK +" = "+LAST_TOKEN, null);
+        cursor.moveToFirst();
+        temp = cursor.getString(0);
+        db.close();
+        cursor.close();
+        return temp;
+    }
+
+    public void updateLastToken(String newToken){
+        SQLiteDatabase db = getWritableDatabase();
+        db.execSQL("UPDATE "+ STRING_PARAM_TABLE +" SET "+ STRING_PARAM_TABLE_ITEM_VALUE +"='"+
+                newToken +"' WHERE "+ STRING_PARAM_TABLE_ITEM_PK+"=" + LAST_TOKEN);
+        db.close();
     }
 
     public int passProtectedStatus(){

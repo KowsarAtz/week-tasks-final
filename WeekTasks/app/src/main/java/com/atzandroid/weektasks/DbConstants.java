@@ -10,6 +10,11 @@ class DbConstants {
     static final String PARAM_TABLE_ITEM_PK = "pk";
     static final String PARAM_TABLE_ITEM_VALUE = "status";
 
+    // String Param Table and its Columns
+    static final String STRING_PARAM_TABLE = "string_params";
+    static final String STRING_PARAM_TABLE_ITEM_PK = "pk";
+    static final String STRING_PARAM_TABLE_ITEM_VALUE = "status";
+
     // Week Tasks Table and its Columns
     static final String WEEK_TASKS_TABLE = "week_tasks";
     static final String WEEK_TASKS_TABLE_PK = "pk";
@@ -36,6 +41,9 @@ class DbConstants {
     static final short CURRENT_WEEK_NUM = 2;
     static final short PASSWORD_HASH = 3;
     static final short LAST_DAY_VISTIED = 4;
+
+    // String Param Table all possible values for Primary Key Column
+    static final short LAST_TOKEN = 1;
 
     static final String CREATE_TABLE_PARAMS =
             "CREATE TABLE "+ PARAM_TABLE + "(" +
@@ -65,6 +73,17 @@ class DbConstants {
                     + " ("+ PARAM_TABLE_ITEM_PK + " , " + PARAM_TABLE_ITEM_VALUE +") "
                     + "VALUES " + "(" + String.valueOf(LAST_DAY_VISTIED)
                     + " , " + String.valueOf(0) + ")";
+
+    static final String CREATE_TABLE_STRING_PARAMS =
+            "CREATE TABLE "+ STRING_PARAM_TABLE + "(" +
+                    STRING_PARAM_TABLE_ITEM_PK +" INTEGER PRIMARY KEY," +
+                    STRING_PARAM_TABLE_ITEM_VALUE +" TEXT" + ");";
+
+    static final String INIT_TABLE_STRING_PARAMS_1 =
+            "INSERT INTO " + STRING_PARAM_TABLE
+                    + " ("+ STRING_PARAM_TABLE_ITEM_PK + " , " + STRING_PARAM_TABLE_ITEM_VALUE +") "
+                    + "VALUES " + "(" + String.valueOf(LAST_TOKEN)
+                    + " ,\"\")";
 
     static final String CREATE_TABLE_WEEK_TASKS =
             "CREATE TABLE "+ WEEK_TASKS_TABLE + "(" +

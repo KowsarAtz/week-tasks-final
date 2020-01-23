@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".LoginActivity"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:background="@color/tasky_dark"
+    android:paddingHorizontal="40dp">
+
+    <EditText
+        android:id="@+id/usernameTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="15dp"
+        android:background="@drawable/task_edittext_background"
+        android:hint="username"
+        android:gravity="center"
+        app:fontFamily="@font/londrina_solid_regular"
+        android:inputType="text"
+        />
+
+    <EditText
+        android:layout_marginTop="10dp"
+        android:id="@+id/passwordTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="15dp"
+        android:background="@drawable/task_edittext_background"
+        android:hint="password"
+        android:gravity="center"
+        app:fontFamily="@font/londrina_solid_regular"
+        android:inputType="textPassword"
+        />
+
+    <Button
+        android:layout_marginTop="10dp"
+        android:id="@+id/login_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:background="@drawable/edit_task_btn_background"
+        android:text="LOGIN"
+        app:fontFamily="@font/londrina_solid_regular"
+        android:textColor="@color/white"
+        android:textSize="22dp"
+        />
+
+</LinearLayout>

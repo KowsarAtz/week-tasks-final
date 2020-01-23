@@ -187,8 +187,6 @@
                         app:fontFamily="@font/londrina_solid_regular"
                         android:textColor="@color/white"
                         style="@style/Widget.AppCompat.Button.Borderless"/>
-
-
                 </LinearLayout>
 
 
@@ -214,11 +212,56 @@
         android:layout_gravity="top|right"
         >
 
-        <Button
-            android:visibility="gone"
+        <TextView
+            android:id="@+id/loggedin_usernamename_tw"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Change Password"
+            android:text="KowsarAtazadeh"
+            android:background="@color/tasky_dark"
+            android:textSize="22sp"
+            android:textColor="@color/white"
+            app:fontFamily="@font/londrina_solid_regular"
+            android:paddingLeft="40dp"
+            android:paddingTop="10dp"
+            />
+
+        <TextView
+            android:id="@+id/loggedin_name_tw"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Kowsar Atazadeh"
+            android:background="@color/tasky_dark"
+            android:textSize="22sp"
+            android:textColor="@color/white"
+            app:fontFamily="@font/londrina_solid_regular"
+            android:paddingLeft="40dp"
+            android:paddingTop="10dp"
+            />
+
+        <TextView
+            android:id="@+id/loggedin_email_tw"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Kowsar.Atazadeh@gmail.com"
+            android:background="@color/tasky_dark"
+            android:textSize="22sp"
+            android:textColor="@color/white"
+            app:fontFamily="@font/londrina_solid_regular"
+            android:paddingLeft="40dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+        />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/white"/>
+
+        <Button
+            android:id="@+id/logout_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Logout"
             android:background="@color/tasky_dark"
             style="@style/Widget.AppCompat.Button.Borderless"
             android:textSize="19sp"
@@ -230,8 +273,8 @@
             android:paddingRight="20dp"
             android:textColor="@color/white"
             />
+
         <View
-            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@color/white"/>

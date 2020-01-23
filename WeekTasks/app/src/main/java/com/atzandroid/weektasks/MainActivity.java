@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.Calendar;
@@ -32,10 +33,10 @@ public class MainActivity extends AppCompatActivity {
     private static final String TODAY = "Today";
 
     private LinearLayout queryLayout;
-    private Button queryYesBtn, getQueryCancelBtn, aboutBtn;
+    private Button queryYesBtn, getQueryCancelBtn, aboutBtn, logoutBtn;
     private int queryPK = 0;
 
-
+    private TextView loggedInName, loggedInUsername, loggedInEmail;
 
     FrameLayout fragmentLayout;
 
@@ -46,8 +47,8 @@ public class MainActivity extends AppCompatActivity {
     private int test = -1;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected void onCreate(Bundle bundle) {
+        super.onCreate(bundle);
         setContentView(R.layout.activity_main);
         initQueryLayout();
         queryLayout.setVisibility(View.VISIBLE);
@@ -61,33 +62,7 @@ public class MainActivity extends AppCompatActivity {
 
         (new WeekTasksDBHelper(this)).overDuePreviousTasks(today);
         setDayButtonListeners();
-        initOptionsMenu();
-
-        justToTest();
-    }
-
-    private void justToTest() {
-        ((Button) findViewById(R.id.increment_day_button)).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                test = today + 1;
-                if(test == 7)
-                    test = 0;
-                initQueryLayout();
-                queryLayout.setVisibility(View.VISIBLE);
-                initDayBtns();
-                setToday();
-
-                WeekTasksDBHelper dbHelper = new WeekTasksDBHelper(MainActivity.this);
-                if(dbHelper.getLastVisited() > SAT && today == SAT)
-                    dbHelper.deleteAllTask();
-                dbHelper.setLastVisited(today);
-
-                (new WeekTasksDBHelper(MainActivity.this)).overDuePreviousTasks(today);
-                setDayButtonListeners();
-                initOptionsMenu();
-            }
-        });
+        initOptionsMenu(getIntent().getExtras());
     }
 
     public void showQueryDialog(int pk){
@@ -125,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void initOptionsMenu(){
+    private void initOptionsMenu(Bundle bundle){
         menu_layout = findViewById(R.id.options_menu_layout);
         options_menu_btn = findViewById(R.id.options_menu_btn);
         menu_layout.setVisibility(View.GONE);
@@ -145,6 +120,25 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this, AboutActivity.class));
             }
         });
+
+        logoutBtn = findViewById(R.id.logout_btn);
+        logoutBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new WeekTasksDBHelper(MainActivity.this).updateLastToken("");
+                startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                finish();
+            }
+        });
+
+        loggedInName = findViewById(R.id.loggedin_name_tw);
+        loggedInEmail = findViewById(R.id.loggedin_email_tw);
+        loggedInUsername = findViewById(R.id.loggedin_usernamename_tw);
+        String name = bundle.getString("first_name").replaceAll("^\"|\"$", "")+
+                bundle.getString("last_name").replaceAll("^\"|\"$", "");
+        loggedInName.setText(name);
+        loggedInUsername.setText(bundle.getString("username").replaceAll("^\"|\"$", ""));
+        loggedInEmail.setText(bundle.getString("email").replaceAll("^\"|\"$", ""));
     }
 
     private void initDayBtns() {
