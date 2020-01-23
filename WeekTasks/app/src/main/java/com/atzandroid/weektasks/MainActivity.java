@@ -9,6 +9,7 @@ import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -19,6 +20,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.File;
 import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
@@ -50,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle bundle) {
         super.onCreate(bundle);
         setContentView(R.layout.activity_main);
+
         initQueryLayout();
         queryLayout.setVisibility(View.VISIBLE);
         initDayBtns();
@@ -134,7 +137,7 @@ public class MainActivity extends AppCompatActivity {
         loggedInName = findViewById(R.id.loggedin_name_tw);
         loggedInEmail = findViewById(R.id.loggedin_email_tw);
         loggedInUsername = findViewById(R.id.loggedin_usernamename_tw);
-        String name = bundle.getString("first_name").replaceAll("^\"|\"$", "")+
+        String name = bundle.getString("first_name").replaceAll("^\"|\"$", "")+" "+
                 bundle.getString("last_name").replaceAll("^\"|\"$", "");
         loggedInName.setText(name);
         loggedInUsername.setText(bundle.getString("username").replaceAll("^\"|\"$", ""));

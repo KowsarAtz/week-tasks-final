@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CameraActivity"
+    android:orientation="vertical"
+    android:background="@color/tasky_dark"
+    android:padding="20dp">
+
+    <TextView
+        android:id="@+id/capture_title_tw"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:fontFamily="@font/londrina_solid_regular"
+        android:text="capture title"
+        android:textColor="@color/tasky_blue"
+        android:textSize="30dp"
+        android:gravity="center"
+        android:padding="20dp"
+        />
+
+    <TextureView
+        android:id="@+id/camera_texture_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        />
+
+    <Button
+        android:layout_marginTop="20dp"
+        android:id="@+id/capture_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:background="@drawable/edit_task_btn_background"
+        android:text="CAPTURE"
+        app:fontFamily="@font/londrina_solid_regular"
+        android:textColor="@color/white"
+        android:textSize="25dp"
+        />
+
+</LinearLayout>

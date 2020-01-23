@@ -21,6 +21,10 @@ public class SplashActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        startActivity(new Intent(this, CameraActivity.class));
+        finish();
+
         validateToken(SplashActivity.this);
     }
 
@@ -62,7 +66,7 @@ public class SplashActivity extends AppCompatActivity {
             public void run() {
                 for (int i=1; i<=5; i+=1) {
                     try {
-                        Thread.sleep(1000);
+                        Thread.sleep(100);
                         Toast.makeText(activity, "second"+i, Toast.LENGTH_SHORT).show();
                     } catch (Exception e) {
                         e.printStackTrace();
